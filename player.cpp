@@ -13,7 +13,9 @@
 #include "player.hpp"
 #include <curses.h>
 
-Player::Player(void):Entity() {}
+Player::Player(void):Entity() {
+    this->bullets = NULL;
+}
 Player::~Player(void) {}
 
 void Player::getPlayerInput(WINDOW *main){
@@ -35,6 +37,24 @@ void Player::getPlayerInput(WINDOW *main){
     }  else if (input == KEY_RIGHT){
         pos.x += xSpeed;
         pos.heading = 3;
+    } else if (input == ' '){
+        this->shoot();
     }
 	this->setPos(pos);
+}
+
+
+void Player::shoot(){
+    VEC pos = this->getPos();
+
+    if (pos.heading == 1){
+        pos.y--;
+    } else if (pos.heading == 0){
+        pos.y++;
+    } else if (pos.heading == 2){
+        pos.x--;
+    } else if (pos.heading == 3){
+        pos.x++;
+    }
+    //add bullets to player array
 }

@@ -21,7 +21,9 @@ class Player: public Entity
 		Player();
 		~Player();
 		void getPlayerInput(WINDOW *);
+        void shoot();
 	private:
+        Entity **bullets;
 };
 
 #endif
