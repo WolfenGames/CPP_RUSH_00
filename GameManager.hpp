@@ -42,6 +42,7 @@ class GameManager
 		void	Init(void);
 		void	Destroy(void);
 		void	DrawBackground(void);
+		void	DrawPlayer(void);
 };
 
 #endif

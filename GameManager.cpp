@@ -97,6 +97,19 @@ void	GameManager::DrawBackground(void)
 	}
 }
 
+void	GameManager::DrawPlayer(void){
+	VEC pos = this->player.getPos;
+	if (pos.heading == 0){
+		this->player.renderDown(this->main, pos.y, pos.x);
+	} else if (pos.heading == 1){
+		this->player.renderUp(this->main, pos.y, pos.x);
+	}  else if (pos.heading == 2){
+		this->player.renderLeft(this->main, pos.y, pos.x);		
+	} else if (pos.heading == 3){
+		this->player.renderRight(this->main, pos.y, pos.x);
+	}
+}
+
 void		GameManager::Draw(void)
 {
 	werase(this->main);
@@ -123,8 +136,3 @@ void		GameManager::Update(void){
 		usleep(DELAY);
 	}
 }
-
-// dir.x = 1 -> left => dir.y = 0
-// dir.x = -1 -> right => dir.y = 0
-// dir.y = 1 -> down => dir.x = 0
-// dir.y = -1 -> up => dir.x = 0
