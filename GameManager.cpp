@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@student.wethinkcode.co.za>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/09 15:06:13 by jwolf            ###   ########.fr       */
+/*   Updated: 2019/06/09 15:57:59 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@ void		GameManager::Init(void)
 	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(4, COLOR_RED, COLOR_BLACK);
 	init_pair(5, COLOR_BLUE, COLOR_BLACK);
+
+	VEC	startPos;
+	startPos.x = 4;
+	startPos.y = 5;
+	startPos.heading = 1;
+	this->player.setPos(startPos);
 }
 
 void	GameManager::DrawBackground(void)
@@ -129,6 +135,7 @@ void		GameManager::Draw(void)
 						(int)bordTopLcor, (int)bordTopRcor, 
 						(int)bordBotLcor, (int)bordBotRcor);
 	this->DrawBackground();
+	this->DrawPlayer();
 	wrefresh(this->main);
 }
 
@@ -141,10 +148,10 @@ void		GameManager::Update(void){
 	
 	while(1) 
 	{
+		this->player.getPlayerInput(this->main);
 		this->Draw();
 		this->tick++;
 		this->swap++;
 		this->currStars = 0;
-		usleep(DELAY);
 	}
 }
