@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@student.wethinkcode.co.za>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:59 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/09 12:15:35 by jwolf            ###   ########.fr       */
+/*   Updated: 2019/06/09 13:28:56 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 #include <curses.h>
 #include <unistd.h>
+#include "player.hpp"
 #include "Common.hpp"
 
 class GameManager
@@ -23,6 +24,7 @@ class GameManager
 	private:
 		WINDOW	*main;
 		WINDOW	*score;
+		Player	player;
 		char	***map;
 		void	**objects;
 		int 	max_y;
@@ -39,6 +41,7 @@ class GameManager
 		void	Draw(void);
 		void	Init(void);
 		void	Destroy(void);
+		void	DrawBackground(void);
 };
 
 #endif
