@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@student.wethinkcode.co.za>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 09:09:22 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/09 11:52:27 by jwolf            ###   ########.fr       */
+/*   Updated: 2019/06/09 14:32:38 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ Projectile::Projectile(void)
 
 Projectile::Projectile(VEC pos, VEC dir, WINDOW *win)
 {
-	this->lifespan = 10000;
+	this->lifespan = 300;
 	this->dir = dir;
 	this->pos = pos;
 	this->win = win;
