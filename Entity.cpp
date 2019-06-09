@@ -19,6 +19,7 @@ void	Entity::setPos(VEC pos)
 {
 	this->pos.x = pos.x;
 	this->pos.y = pos.y;
+	this->pos.heading = pos.heading;
 }
 
 VEC		Entity::getPos(void)
@@ -27,22 +28,26 @@ VEC		Entity::getPos(void)
 }
 
 
-void	Entity::renderLeft(WINDOW *, int, int)
+void	Entity::renderLeft(WINDOW *main, const char *sprite)
 {
-
+	VEC pos = this->getPos();
+	mvwprintw(main, pos.y, pos.x, sprite);
 }
 
-void	Entity::renderRight(WINDOW *, int, int)
+void	Entity::renderRight(WINDOW *main, const char *sprite)
 {
-
+	VEC pos = this->getPos();
+	mvwprintw(main, pos.y, pos.x, sprite);
 }
 
-void	Entity::renderUp(WINDOW *, int, int)
+void	Entity::renderUp(WINDOW *main, const char *sprite)
 {
-
+	VEC pos = this->getPos();
+	mvwprintw(main, pos.y, pos.x, sprite);
 }
 
-void	Entity::renderDown(WINDOW *, int, int)
+void	Entity::renderDown(WINDOW *main, const char *sprite)
 {
-
+	VEC pos = this->getPos();
+	mvwprintw(main, pos.y, pos.x, sprite);
 }

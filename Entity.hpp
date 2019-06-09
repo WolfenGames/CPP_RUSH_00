@@ -20,10 +20,10 @@ class Entity {
 	public:
 		Entity(void);
 		~Entity(void);
-		void	renderLeft(WINDOW *, int, int);
-		void	renderRight(WINDOW *, int, int);
-		void	renderUp(WINDOW *, int, int);
-		void	renderDown(WINDOW *, int, int);
+		void	renderLeft(WINDOW *, const char *sprite);
+		void	renderRight(WINDOW *, const char *sprite);
+		void	renderUp(WINDOW *, const char *sprite);
+		void	renderDown(WINDOW *,const char *sprite);
 		
 		void	setPos(VEC);
 		VEC		getPos(void);

@@ -100,13 +100,13 @@ void	GameManager::DrawBackground(void)
 void	GameManager::DrawPlayer(void){
 	VEC pos = this->player.getPos();
 	if (pos.heading == 0){
-		this->player.renderDown(this->main, pos.y, pos.x);
+		this->player.renderDown(this->main, "v");
 	} else if (pos.heading == 1){
-		this->player.renderUp(this->main, pos.y, pos.x);
+		this->player.renderUp(this->main, "^");
 	}  else if (pos.heading == 2){
-		this->player.renderLeft(this->main, pos.y, pos.x);		
+		this->player.renderLeft(this->main, "<");		
 	} else if (pos.heading == 3){
-		this->player.renderRight(this->main, pos.y, pos.x);
+		this->player.renderRight(this->main, ">");
 	}
 }
 
