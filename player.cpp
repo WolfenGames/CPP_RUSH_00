@@ -20,16 +20,16 @@ void Player::getPlayerInput(WINDOW *main){
     int input = wgetch(main);
     VEC pos = this->getPos();
     if (input == KEY_UP){
-        pos.y = pos.y++;
+        pos.y--;
         pos.heading = 1;
     } else if (input == KEY_DOWN){
-        pos.y = pos.y--;
+        pos.y++;
         pos.heading = 0;
     }  else if (input == KEY_LEFT){
-        pos.x = pos.x--;
+        pos.x -= 2;
         pos.heading = 2;
     }  else if (input == KEY_RIGHT){
-        pos.x = pos.x++;
+        pos.x += 2;
         pos.heading = 3;
     }
 	this->setPos(pos);
