@@ -34,6 +34,7 @@ class GameManager
 		int		maxStars;
 		int		currStars;
 		int		tick;
+
 	public:
 		GameManager(void);
 		~GameManager();

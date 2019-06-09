@@ -112,10 +112,22 @@ void	GameManager::DrawPlayer(void){
 
 void		GameManager::Draw(void)
 {
+	char bordTop = '=';
+	char bordBot = '=';
+	char bordLeft = '|';
+	char bordRight = '|';
+	char bordTopLcor = '.';
+	char bordTopRcor = '.';
+	char bordBotLcor = '`';
+	char bordBotRcor = '`';
+
 	werase(this->main);
 	wclear(this->main);
 	wattron(this->main, A_BOLD);
-	box(this->main, 0, 0);
+	wborder(this->main, (int)bordLeft, (int)bordRight, 
+						(int)bordTop, (int)bordBot, 
+						(int)bordTopLcor, (int)bordTopRcor, 
+						(int)bordBotLcor, (int)bordBotRcor);
 	this->DrawBackground();
 	wrefresh(this->main);
 }
