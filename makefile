@@ -1,6 +1,6 @@
 NAME = "ft_retro"
 
-CFLAGS = -Wextra -Wall -Werror -O3 -std=c++98 
+CFLAGS = -Wextra -Wall -Werror -O3 -std=c++11
 LDFLAGS = -lncurses 
 
 C = clang++
