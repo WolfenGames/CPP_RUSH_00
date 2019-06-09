@@ -6,13 +6,13 @@
 /*   By: jwolf <jwolf@student.wethinkcode.co.za>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:59 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/09 13:28:56 by jwolf            ###   ########.fr       */
+/*   Updated: 2019/06/09 14:57:09 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GAMEMANAGER_HPP
 # define GAMEMANAGER_HPP
-#define DELAY 30000
+#define DELAY 10000
 
 #include <curses.h>
 #include <unistd.h>

@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@student.wethinkcode.co.za>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/09 13:29:07 by jwolf            ###   ########.fr       */
+/*   Updated: 2019/06/09 15:01:04 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,17 @@ void		GameManager::Init(void)
 	keypad(this->main, TRUE);
 	nodelay(this->main, TRUE);
 	halfdelay(TRUE);
+	init_pair(1, COLOR_WHITE, COLOR_BLACK);
+	init_pair(2, COLOR_GREEN, COLOR_BLACK);
+	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(4, COLOR_RED, COLOR_BLACK);
+	init_pair(5, COLOR_BLUE, COLOR_BLACK);
 }
 
 void	GameManager::DrawBackground(void)
 {
-	if (((this->tick % 10) / 3) == 0)
+	if (((this->tick % 10)/3) == 0)
 	{
-		usleep(DELAY);
 		for(int i = 1; i < this->max_y - 1; i++)
 		{
 			for (int j = 1; j < this->max_x - 1; j++)
@@ -56,9 +60,35 @@ void	GameManager::DrawBackground(void)
 					{
 						this->currStars++;
 						if (this->swap % 2)
-							if ((i * j + 1) % 2) mvwprintw(main, i, j, "+"); else mvwprintw(main, i, j, "*");
+						{
+							if ((i * j + 1) % 2) 
+							{
+								wattron(this->main, COLOR_PAIR(3));
+								mvwprintw(main, i, j, "+");
+								wattroff(this->main, COLOR_PAIR(3));
+							}
+							else 
+							{
+								wattron(this->main, COLOR_PAIR(4));
+								mvwprintw(main, i, j, "*");
+								wattroff(this->main, COLOR_PAIR(4));
+							}
+						}
 						else
-							if ((i * j + 1) % 2) mvwprintw(main, i, j, "*"); else mvwprintw(main, i, j, "+");
+						{
+							if ((i * j + 1) % 2)
+							{
+								wattron(this->main, COLOR_PAIR(1));
+								mvwprintw(main, i, j, "*");
+								wattroff(this->main, COLOR_PAIR(1));
+							}
+							else
+							{
+								wattron(this->main, COLOR_PAIR(2));
+								mvwprintw(main, i, j, "+");
+								wattroff(this->main, COLOR_PAIR(2));	
+							}
+						}
 					}
 				}
 			}
@@ -80,27 +110,29 @@ void	GameManager::DrawPlayer(void){
 	}
 }
 
-void	GameManager::Draw(void)
+void		GameManager::Draw(void)
 {
-	this->currStars = 0;
-	this->maxStars = 40;
-	while(1) 
-	{
-		wclear(this->main);
-		werase(this->main);
-		box(this->main, 0, 0);
-		this->DrawBackground();
-		wrefresh(this->main);
-		this->tick++;
-		this->swap++;
-		this->currStars = 0;
-	}
+	werase(this->main);
+	wclear(this->main);
+	wattron(this->main, A_BOLD);
+	box(this->main, 0, 0);
+	this->DrawBackground();
+	wrefresh(this->main);
 }
 
 GameManager::~GameManager(void)
-{
-	
-}
+{}
 
 void		GameManager::Update(void){
+	this->currStars = 0;
+	this->maxStars = 40;
+	
+	while(1) 
+	{
+		this->Draw();
+		this->tick++;
+		this->swap++;
+		this->currStars = 0;
+		usleep(DELAY);
+	}
 }
