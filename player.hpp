@@ -20,8 +20,8 @@ class Player: public Entity
 	public:
 		Player();
 		~Player();
-	private:
 		void getPlayerInput();
+	private:
 };
 
 #endif
