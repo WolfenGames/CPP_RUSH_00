@@ -21,6 +21,7 @@ class Player: public Entity
 		Player();
 		~Player();
 	private:
+		void getPlayerInput();
 };
 
 #endif
