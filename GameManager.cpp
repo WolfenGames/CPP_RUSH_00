@@ -67,6 +67,19 @@ void	GameManager::DrawBackground(void)
 	}
 }
 
+void	GameManager::DrawPlayer(void){
+	VEC pos = this->player.getPos;
+	if (pos.heading == 0){
+		this->player.renderDown(this->main, pos.y, pos.x);
+	} else if (pos.heading == 1){
+		this->player.renderUp(this->main, pos.y, pos.x);
+	}  else if (pos.heading == 2){
+		this->player.renderLeft(this->main, pos.y, pos.x);		
+	} else if (pos.heading == 3){
+		this->player.renderRight(this->main, pos.y, pos.x);
+	}
+}
+
 void	GameManager::Draw(void)
 {
 	this->currStars = 0;
@@ -90,5 +103,4 @@ GameManager::~GameManager(void)
 }
 
 void		GameManager::Update(void){
-	this->Draw();
 }

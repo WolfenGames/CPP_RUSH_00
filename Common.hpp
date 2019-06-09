@@ -17,6 +17,7 @@ struct VEC
 {
 	int x;
 	int y;
+	int heading;
 };
 
 #endif
