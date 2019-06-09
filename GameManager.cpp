@@ -6,7 +6,7 @@
 /*   By: jwolf <jwolf@student.wethinkcode.co.za>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/09 15:01:04 by jwolf            ###   ########.fr       */
+/*   Updated: 2019/06/09 15:06:13 by jwolf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	GameManager::DrawBackground(void)
 }
 
 void	GameManager::DrawPlayer(void){
-	VEC pos = this->player.getPos;
+	VEC pos = this->player.getPos();
 	if (pos.heading == 0){
 		this->player.renderDown(this->main, pos.y, pos.x);
 	} else if (pos.heading == 1){
