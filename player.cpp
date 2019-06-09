@@ -15,6 +15,7 @@
 
 Player::Player(void):Entity() {}
 Player::~Player(void) {}
+
 void Player::getPlayerInput(){
     int input = getch();
     VEC pos = this->getPos();
