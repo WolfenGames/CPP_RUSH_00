@@ -6,7 +6,7 @@
 /*   By: tramants <tramants@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 14:22:49 by tramants         ###   ########.fr       */
+/*   Updated: 2019/06/10 15:40:41 by tramants         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void		GameManager::Init(void)
 	init_pair(5, COLOR_BLUE, COLOR_BLACK);
 
 	VEC	startPos;
-	startPos.x = 4;
-	startPos.y = 5;
-	startPos.heading = 1;
+	startPos.x = this->max_x;
+	startPos.y = this->max_y / 2;
+	startPos.heading = 2;
 	this->player.setPos(startPos);
 	this->secondsLeft = (120 * 60);
 }

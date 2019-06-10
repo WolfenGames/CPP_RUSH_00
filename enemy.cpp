@@ -6,7 +6,7 @@
 /*   By: tramants <tramants@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 10:44:21 by tramants          #+#    #+#             */
-/*   Updated: 2019/06/10 15:31:30 by tramants         ###   ########.fr       */
+/*   Updated: 2019/06/10 15:49:32 by tramants         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ void	Enemy::renderEnemy(WINDOW *main, const char *sprite)
 void    Enemy::updateMovement(int max_y, int max_x)
 {
     VEC enemyPos = this->getPos();
+    if (enemyPos.y == max_y || enemyPos.y + 1 == max_y) {
+        enemyPos.y = enemyPos.y - 2;
+    }
+    if (enemyPos.y == 0 || enemyPos.y == 1) {
+        enemyPos.y = enemyPos.y + 2;
+    }
     if (
         enemyPos.x < max_x 
         && enemyPos.x + 2 != max_x 
