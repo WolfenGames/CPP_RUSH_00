@@ -6,7 +6,7 @@
 /*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 17:00:08 by rde-beer         ###   ########.fr       */
+/*   Updated: 2019/06/10 17:08:35 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,9 +334,7 @@ void 		GameManager::showTimer(void)
 	wattron(this->main, COLOR_PAIR(2));
 	mvwprintw(this->main, 0, 0, "%i", this->secondsLeft / 60);
 	for (int i = 0; i < this->player.getLifes(); i++)
-	{
 		mvwprintw(this->main, 1, i + 1, "<3");
-	}
 	wattroff(this->main, COLOR_PAIR(2));
 	this->secondsLeft -= 5;
 }
