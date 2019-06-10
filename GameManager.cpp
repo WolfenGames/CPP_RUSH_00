@@ -6,7 +6,7 @@
 /*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 11:09:27 by rde-beer         ###   ########.fr       */
+/*   Updated: 2019/06/10 11:25:29 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		GameManager::Init(void)
 	startPos.y = 5;
 	startPos.heading = 1;
 	this->player.setPos(startPos);
-	this->secondsLeft = 120 * 60;
+	this->secondsLeft = 20 * 60;
 }
 
 void	GameManager::DrawBackground(void)
@@ -253,13 +253,13 @@ bool	GameManager::canStart(void)
 
     keypad(menuwin, true);
 
-    std::string choices[3] = {"Play", "Instructions", "Exit"};
+    std::string choices[2] = {"Play", "Exit"};
     int choice;
     int highlight = 0;
 
     while(1)
     {
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < 2; i++)
         {
             if(i == highlight)
                 wattron(menuwin, A_REVERSE);
@@ -277,8 +277,8 @@ bool	GameManager::canStart(void)
                 break;
             case KEY_DOWN:
                 highlight++;
-                if(highlight == 3)
-                    highlight = 2;
+                if(highlight == 2)
+                    highlight = 1;
                 break;
             default:
                 break;
