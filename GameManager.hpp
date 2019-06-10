@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include "player.hpp"
 #include "Common.hpp"
+#include "Projectile.hpp"
 
 class GameManager
 {
@@ -26,6 +27,7 @@ class GameManager
 		WINDOW	*score;
 		Player	player;
 		t_list	*objects;
+		t_list	*projectiles;
 		int 	max_y;
 		int		max_x;
 		int 	state;
@@ -34,9 +36,6 @@ class GameManager
 		int		currStars;
 		int		tick;
   		int 	secondsLeft;// = 120;
-		void	pushOnObjects(Entity*);
-		bool	entityExists(Entity*, t_list*);
-		void	checkObjs(void);
 
 	public:
 		GameManager(void);
@@ -51,7 +50,13 @@ class GameManager
 		void	DrawBackground(void);
 		void	DrawPlayer(void);
 		void	DrawEntities(void);
+		void	DrawProjectiles(void);
 		void	createEnemies(void);
+		void	pushOnObjects(Entity*);
+		void	pushOnProjectiles(Projectile*);
+		bool	entityExists(Entity*, t_list*);
+		void	checkObjs(void);
+		void	checkProjectile(void);
 };
 
 #endif

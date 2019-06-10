@@ -165,7 +165,6 @@ void		GameManager::pushOnObjects(Entity *obj)
 	tmp = this->objects;
 	if (obj && !entityExists(obj, tmp))
 	{
-		mvwaddstr(this->main, 2, 4, "exists");
 		tmp = this->objects;
 		if (!this->objects)
 		{
@@ -184,20 +183,56 @@ void		GameManager::pushOnObjects(Entity *obj)
 	}
 }
 
-#include <sstream>
+void		GameManager::pushOnProjectiles(Projectile *obj)
+{
+	t_list *tmp;
+
+	tmp = this->objects;
+	if (obj)
+	{
+		tmp = this->objects;
+		if (!this->objects)
+		{
+			this->objects = new t_list;
+			this->objects->content = obj;
+			this->objects->next = NULL;
+		}
+		else
+		{
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = new t_list;
+			tmp->next->content = obj;
+			tmp->next->next = NULL;
+		}
+	}
+}
+
 void		GameManager::DrawEntities(void)
 {
 	t_list *tmp;
 
 	tmp = this->objects;
-	int i = 0;
-	std::stringstream ss;
 	while (tmp)
 	{
-		i++;
 		Entity *x = (Entity*)tmp->content;
-		ss << x->getPos().x;
 		wattron(this->main, COLOR_PAIR(4));
+		mvwprintw(this->main, x->getPos().y, x->getPos().x, "#");
+		wattroff(this->main, COLOR_PAIR(4));
+		tmp = tmp->next;
+	}
+}
+
+void		GameManager::DrawProjectiles(void)
+{
+	t_list *tmp;
+
+	tmp = this->projectiles;
+	while (tmp)
+	{
+		Projectile *x = (Projectile*)tmp->content;
+		wattron(this->main, COLOR_PAIR(4));
+		//Position based on heading
 		mvwprintw(this->main, x->getPos().y, x->getPos().x, "#");
 		wattroff(this->main, COLOR_PAIR(4));
 		tmp = tmp->next;
