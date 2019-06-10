@@ -6,7 +6,7 @@
 /*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 10:49:58 by rde-beer         ###   ########.fr       */
+/*   Updated: 2019/06/10 11:09:27 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void		GameManager::Init(void)
 	startPos.y = 5;
 	startPos.heading = 1;
 	this->player.setPos(startPos);
+	this->secondsLeft = 120 * 60;
 }
 
 void	GameManager::DrawBackground(void)
@@ -138,6 +139,7 @@ void		GameManager::Draw(void)
 						(int)bordBotLcor, (int)bordBotRcor);
 	this->DrawBackground();
 	this->DrawPlayer();
+	this->showTimer();
 	wrefresh(this->main);
 }
 
@@ -188,7 +190,7 @@ void		GameManager::Update(void){
 	this->currStars = 0;
 	this->maxStars = 40;
 	
-	while(1) 
+	while(this->secondsLeft >= 0) 
 	{
 		this->player.getPlayerInput(this->main);
 		wattroff(this->main, COLOR_PAIR(5));
@@ -199,19 +201,12 @@ void		GameManager::Update(void){
 	}
 }
 
-void GameManager::timer(void) 
+void GameManager::showTimer(void) 
 {
-  int secondsLeft = 120;
-  initscr();
-  curs_set(0);
-  do {
-    printw("%i", secondsLeft);
-    refresh();
-    erase();
-    secondsLeft--;
-    napms(1000);
-  } while (secondsLeft > 0);
-  endwin();
+	wattron(this->main, COLOR_PAIR(2));
+	mvwprintw(this->main, 0, 0, "%i", this->secondsLeft/60);
+	wattroff(this->main, COLOR_PAIR(2));
+	this->secondsLeft -= 5;
 }
 
 bool	GameManager::canStart(void)
