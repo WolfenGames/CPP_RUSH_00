@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   Entity.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwolf <jwolf@student.wethinkcode.co.za>    +#+  +:+       +#+        */
+/*   By: tramants <tramants@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 13:34:09 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/08 13:46:54 by jwolf            ###   ########.fr       */
+/*   Updated: 2019/06/10 17:26:17 by tramants         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Entity.hpp"
 
-Entity::Entity(){}
-Entity::~Entity(){}
+Entity::Entity(){this->isBig = false;}
+Entity::Entity(bool isBig){ this->isBig = isBig;}
+Entity::~Entity(){};
 
 void	Entity::setPos(VEC pos)
 {

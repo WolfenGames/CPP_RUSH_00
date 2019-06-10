@@ -6,7 +6,7 @@
 /*   By: tramants <tramants@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 10:44:21 by tramants          #+#    #+#             */
-/*   Updated: 2019/06/10 15:54:02 by tramants         ###   ########.fr       */
+/*   Updated: 2019/06/10 17:27:14 by tramants         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <cstdlib>
 
 Enemy::Enemy(void):Entity() {}
+Enemy::Enemy(bool isBig):Entity(isBig) {}
 Enemy::~Enemy(void) {}
 
 void	Enemy::renderEnemy(WINDOW *main, const char *sprite)

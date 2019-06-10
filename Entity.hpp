@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Entity.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwolf <jwolf@student.wethinkcode.co.za>    +#+  +:+       +#+        */
+/*   By: tramants <tramants@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 13:34:16 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/09 11:31:12 by jwolf            ###   ########.fr       */
+/*   Updated: 2019/06/10 17:26:35 by tramants         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 class Entity {
 	public:
 		Entity(void);
+		Entity(bool isBig);
 		~Entity(void);
 		void	renderLeft(WINDOW *, const char *sprite);
 		void	renderRight(WINDOW *, const char *sprite);
@@ -31,6 +32,7 @@ class Entity {
 		void	setLife(int);
 		int		getLife(void);
 		bool	IsAlive(void);
+		bool	isBig;
 	private:
 		VEC		pos;
 		int		life;
