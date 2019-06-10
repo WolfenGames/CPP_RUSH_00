@@ -23,7 +23,7 @@ void Player::getPlayerInput(WINDOW *main){
     int input = wgetch(main);
     VEC pos = this->getPos();
 
-    int xSpeed = 2;
+    int xSpeed = 1;
     int ySpeed = 1;
 
     if (input == KEY_UP){
