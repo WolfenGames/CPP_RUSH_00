@@ -6,7 +6,7 @@
 /*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 11:25:29 by rde-beer         ###   ########.fr       */
+/*   Updated: 2019/06/10 15:05:05 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void		GameManager::Init(void)
 	startPos.y = 5;
 	startPos.heading = 1;
 	this->player.setPos(startPos);
-	this->secondsLeft = 20 * 60;
+	this->secondsLeft = 5 * 60;
+	this->restart = 1;
 }
 
 void	GameManager::DrawBackground(void)
@@ -253,13 +254,13 @@ bool	GameManager::canStart(void)
 
     keypad(menuwin, true);
 
-    std::string choices[2] = {"Play", "Exit"};
-    int choice;
-    int highlight = 0;
+    std::string choices[] = {"Play", "Retry", "Exit"};
+    size_t choice;
+    size_t highlight = 0;
 
     while(1)
     {
-        for(int i = 0; i < 2; i++)
+        for(size_t i = 0; i < (sizeof(choices)/sizeof(choices[0])); i++)
         {
             if(i == highlight)
                 wattron(menuwin, A_REVERSE);
@@ -272,13 +273,13 @@ bool	GameManager::canStart(void)
         {
             case KEY_UP:
                 highlight--;
-                if(highlight == -1)
+                if((int)highlight == -1)
                     highlight = 0;
                 break;
             case KEY_DOWN:
                 highlight++;
-                if(highlight == 2)
-                    highlight = 1;
+                if(highlight == 3)
+                    highlight = 2;
                 break;
             default:
                 break;
@@ -286,14 +287,47 @@ bool	GameManager::canStart(void)
         if(choice == 10)
             break;
     }
-    if (choices[highlight] == "Play")
+    if (choices[highlight] == choices[0])
 	{
 		delwin(menuwin);
 		return true;
 	}
-	else
+	else if (choices[highlight] == choices[1])
 	{
 		delwin(menuwin);
+		return true;
+	}
+	else// if (choices[highlight] == choices[2])
+	{
+		this->restart = false;
+		delwin(this->main);
 		return false;
+	}
+}
+
+void	GameManager::gameOver(void)
+{
+	int yMax, xMax;
+	delwin(this->main);
+	getmaxyx(stdscr, yMax, xMax);
+	this->main = newwin(6, xMax, yMax, 5);
+	nodelay(this->main, true);
+	keypad(this->main, true);
+	while (1)
+	{
+		wclear(this->main);
+		box(this->main, 0, 0);
+		refresh();
+		wrefresh(this->main);
+		mvprintw(2, 5," ####    ##   #    # ######     ####  #    # ###### #####");
+		mvprintw(3, 5,"#    #  #  #  ##  ## #         #    # #    # #      #    #");
+		mvprintw(4, 5,"#      #    # # ## # #####     #    # #    # #####  #    #");
+		mvprintw(5, 5,"#  ### ###### #    # #         #    # #    # #      #####");
+		mvprintw(6, 5,"#    # #    # #    # #         #    #  #  #  #      #   #");
+		mvprintw(7, 5," ####  #    # #    # ######     ####    ##   ###### #    #");
+		mvprintw(15, 10, "Press up to continue");
+		int x = wgetch(this->main);
+		if (x >= 0)
+			break;
 	}
 }

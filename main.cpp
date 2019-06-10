@@ -6,7 +6,7 @@
 /*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 08:57:10 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 11:01:39 by rde-beer         ###   ########.fr       */
+/*   Updated: 2019/06/10 14:27:02 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		main(void)
 		//manager.createEnemies();
 		manager.Update();
 	}
-
+	manager.gameOver();
 	endwin();
 	return (0);
 }
