@@ -51,3 +51,8 @@ void	Entity::renderDown(WINDOW *main, const char *sprite)
 	VEC pos = this->getPos();
 	mvwprintw(main, pos.y, pos.x, sprite);
 }
+
+void	Entity::setLife(int l)
+{
+	this->life = l;
+}

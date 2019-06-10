@@ -144,6 +144,46 @@ void		GameManager::Draw(void)
 GameManager::~GameManager(void)
 {}
 
+void		GameManager::pushOnObjects(Entity *obj)
+{
+	t_list *tmp;
+
+	tmp = this->objects;
+	if (obj && !entityExists(obj, tmp))
+	{
+		if (!this->objects)
+		{
+			this->objects = new t_list;
+			this->objects->content = obj;
+			this->objects->next = NULL;
+		}
+		else
+		{
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = new t_list;
+			tmp->next->content = obj;
+			tmp->next->next = NULL;
+		}
+	}
+}
+
+bool		GameManager::entityExists(Entity *obj, t_list *lst)
+{
+	if (!this->objects)
+		return false;
+	if (this->objects->content == obj)
+		return true;
+	return this->entityExists(obj, lst->next);
+}
+
+void		GameManager::checkObjs(void)
+{
+	t_list	*tmp;
+
+	tmp = this->objects;
+}
+
 void		GameManager::Update(void){
 	this->currStars = 0;
 	this->maxStars = 40;

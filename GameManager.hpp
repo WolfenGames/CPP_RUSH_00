@@ -25,8 +25,7 @@ class GameManager
 		WINDOW	*main;
 		WINDOW	*score;
 		Player	player;
-		char	***map;
-		Entity	**objects;
+		t_list	*objects;
 		int 	max_y;
 		int		max_x;
 		int 	state;
@@ -34,6 +33,9 @@ class GameManager
 		int		maxStars;
 		int		currStars;
 		int		tick;
+		void	pushOnObjects(Entity*);
+		bool	entityExists(Entity*, t_list*);
+		void	checkObjs(void);
 
 	public:
 		GameManager(void);

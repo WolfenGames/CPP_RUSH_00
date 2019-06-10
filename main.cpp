@@ -18,6 +18,7 @@
 
 #include "player.hpp"
 #include "GameManager.hpp"
+#include "Common.hpp"
 
 int		main(void)
 {

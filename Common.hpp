@@ -13,6 +13,12 @@
 #ifndef COMMON_HPP
 # define COMMON_HPP
 
+typedef struct	s_list
+{
+	void		*content;
+	s_list		*next;
+}				t_list;
+
 struct VEC
 {
 	int x;

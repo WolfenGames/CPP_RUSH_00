@@ -85,13 +85,18 @@ void		Projectile::setDown(std::string down[])
 
 void		Projectile::move(void)
 {
-	int x = 0, y = 0;
-	while(lifespan-- >= 0)
+	if (lifespan == 0)
 	{
-		mvwprintw(this->win, this->pos.y + (y * this->dir.y), this->pos.x + (x * this->dir.x), this->right.c_str());
-		x++;
-		y++;
+		delete this;
+		return;
 	}
+	int x = 0, y = 0;
+	wattron(this->win, COLOR_PAIR(4));
+	mvwprintw(this->win, this->pos.y + (y * this->dir.y), this->pos.x + (x * this->dir.x), this->right.c_str());
+	wattroff(this->win, COLOR_PAIR(4));
+	x++;
+	y++;
+	this->lifespan--;
 }
 
 void		Projectile::shoot(VEC pos, VEC dir)

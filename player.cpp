@@ -13,7 +13,9 @@
 #include "player.hpp"
 #include <curses.h>
 
-Player::Player(void):Entity() {}
+Player::Player(void):Entity() {
+	this->setLife(3);
+}
 Player::~Player(void) {}
 
 void Player::getPlayerInput(WINDOW *main){
