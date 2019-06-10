@@ -163,7 +163,7 @@ void		GameManager::pushOnObjects(Entity *obj)
 	t_list *tmp;
 
 	tmp = this->objects;
-	if (obj && !entityExists(obj, tmp))
+	if (obj)
 	{
 		tmp = this->objects;
 		if (!this->objects)
@@ -239,15 +239,6 @@ void		GameManager::DrawProjectiles(void)
 	}
 }
 
-bool		GameManager::entityExists(Entity *obj, t_list *lst)
-{
-	if (!this->objects)
-		return false;
-	if (this->objects->content == obj)
-		return true;
-	return this->entityExists(obj, lst->next);
-}
-
 void		GameManager::checkObjs(void)
 {
 	t_list	*tmp;
@@ -260,7 +251,7 @@ void		GameManager::createEnemies(void)
 	for (int i = 0; i < 20; i++)
 	{
 		Entity *newE = new Entity();
-		newE->setPos(rand() % 20, rand() % 20);
+		newE->setPos(rand() % this->max_x, rand() % this->max_y);
 		this->pushOnObjects(newE);
 	}
 }

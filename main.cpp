@@ -27,7 +27,7 @@ int		main(void)
 	if(manager.canStart())
 	{
 		manager.showTimer();
-		//manager.createEnemies();
+		manager.createEnemies();
 		manager.Update();
 	}
 
