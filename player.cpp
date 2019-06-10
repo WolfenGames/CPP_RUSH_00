@@ -15,6 +15,7 @@
 
 Player::Player(void):Entity() {
     this->bullets = NULL;
+	this->setLife(3);
 }
 Player::~Player(void) {}
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   GameManager.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwolf <jwolf@student.wethinkcode.co.za>    +#+  +:+       +#+        */
+/*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/09 15:57:59 by jwolf            ###   ########.fr       */
+/*   Updated: 2019/06/10 11:25:29 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 #include <iostream>
 
 GameManager::GameManager(void)
-{}
+{
+	this->objects = NULL;
+}
 
 void		GameManager::Init(void)
 {
@@ -49,6 +51,7 @@ void		GameManager::Init(void)
 	startPos.y = 5;
 	startPos.heading = 1;
 	this->player.setPos(startPos);
+	this->secondsLeft = 20 * 60;
 }
 
 void	GameManager::DrawBackground(void)
@@ -120,10 +123,8 @@ void	GameManager::DrawPlayer(void){
 
 void		GameManager::Draw(void)
 {
-	char bordTop = '=';
-	char bordBot = '=';
-	char bordLeft = '|';
-	char bordRight = '|';
+	char bordTopAndBot = '=';
+	char bordLeftAndRight = '|';
 	char bordTopLcor = '.';
 	char bordTopRcor = '.';
 	char bordBotLcor = '`';
@@ -132,23 +133,96 @@ void		GameManager::Draw(void)
 	werase(this->main);
 	wclear(this->main);
 	wattron(this->main, A_BOLD);
-	wborder(this->main, (int)bordLeft, (int)bordRight, 
-						(int)bordTop, (int)bordBot, 
+	wborder(this->main, (int)bordLeftAndRight, (int)bordLeftAndRight, 
+						(int)bordTopAndBot, (int)bordTopAndBot, 
 						(int)bordTopLcor, (int)bordTopRcor, 
 						(int)bordBotLcor, (int)bordBotRcor);
 	this->DrawBackground();
 	this->DrawPlayer();
+	this->showTimer();
+	this->DrawEntities();
 	wrefresh(this->main);
 }
 
 GameManager::~GameManager(void)
 {}
 
+void		GameManager::pushOnObjects(Entity *obj)
+{
+	t_list *tmp;
+
+	tmp = this->objects;
+	if (obj && !entityExists(obj, tmp))
+	{
+		mvwaddstr(this->main, 2, 4, "exists");
+		tmp = this->objects;
+		if (!this->objects)
+		{
+			this->objects = new t_list;
+			this->objects->content = obj;
+			this->objects->next = NULL;
+		}
+		else
+		{
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = new t_list;
+			tmp->next->content = obj;
+			tmp->next->next = NULL;
+		}
+	}
+}
+
+#include <sstream>
+void		GameManager::DrawEntities(void)
+{
+	t_list *tmp;
+
+	tmp = this->objects;
+	int i = 0;
+	std::stringstream ss;
+	while (tmp)
+	{
+		i++;
+		Entity *x = (Entity*)tmp->content;
+		ss << x->getPos().x;
+		wattron(this->main, COLOR_PAIR(4));
+		mvwprintw(this->main, x->getPos().y, x->getPos().x, "#");
+		wattroff(this->main, COLOR_PAIR(4));
+		tmp = tmp->next;
+	}
+}
+
+bool		GameManager::entityExists(Entity *obj, t_list *lst)
+{
+	if (!this->objects)
+		return false;
+	if (this->objects->content == obj)
+		return true;
+	return this->entityExists(obj, lst->next);
+}
+
+void		GameManager::checkObjs(void)
+{
+	t_list	*tmp;
+
+	tmp = this->objects;
+}
+
+void		GameManager::createEnemies(void)
+{
+	for (int i = 0; i < 20; i++)
+	{
+		Entity *newE = new Entity();
+		newE->setPos(rand() % 20, rand() % 20);
+		this->pushOnObjects(newE);
+	}
+}
+
 void		GameManager::Update(void){
 	this->currStars = 0;
 	this->maxStars = 40;
-	
-	while(1) 
+	while(this->secondsLeft >= 0) 
 	{
 		this->player.getPlayerInput(this->main);
 		wattroff(this->main, COLOR_PAIR(5));
@@ -156,5 +230,70 @@ void		GameManager::Update(void){
 		this->tick++;
 		this->swap++;
 		this->currStars = 0;
+	}
+}
+
+void GameManager::showTimer(void) 
+{
+	wattron(this->main, COLOR_PAIR(2));
+	mvwprintw(this->main, 0, 0, "%i", this->secondsLeft/60);
+	wattroff(this->main, COLOR_PAIR(2));
+	this->secondsLeft -= 5;
+}
+
+bool	GameManager::canStart(void)
+{
+    int yMax, xMax;
+    getmaxyx(stdscr, yMax, xMax);
+
+    WINDOW * menuwin = newwin(6, xMax-12, yMax-8, 5);
+    box(menuwin, 0, 0);
+    refresh();
+    wrefresh(menuwin);
+
+    keypad(menuwin, true);
+
+    std::string choices[2] = {"Play", "Exit"};
+    int choice;
+    int highlight = 0;
+
+    while(1)
+    {
+        for(int i = 0; i < 2; i++)
+        {
+            if(i == highlight)
+                wattron(menuwin, A_REVERSE);
+            mvwprintw(menuwin, i+1, 1, choices[i].c_str());
+            wattroff(menuwin, A_REVERSE);
+        }
+        choice = wgetch(menuwin);
+
+        switch(choice)
+        {
+            case KEY_UP:
+                highlight--;
+                if(highlight == -1)
+                    highlight = 0;
+                break;
+            case KEY_DOWN:
+                highlight++;
+                if(highlight == 2)
+                    highlight = 1;
+                break;
+            default:
+                break;
+        }
+        if(choice == 10)
+            break;
+    }
+    if (choices[highlight] == "Play")
+	{
+		delwin(menuwin);
+		return true;
+	}
+	else
+	{
+		delwin(menuwin);
+		return false;
 	}
 }

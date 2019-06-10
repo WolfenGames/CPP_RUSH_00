@@ -22,6 +22,13 @@ void	Entity::setPos(VEC pos)
 	this->pos.heading = pos.heading;
 }
 
+void	Entity::setPos(int x, int y)
+{
+	this->pos.x = x;
+	this->pos.y = y;
+	this->pos.heading = 0;
+}
+
 VEC		Entity::getPos(void)
 {
 	return this->pos;
@@ -50,4 +57,9 @@ void	Entity::renderDown(WINDOW *main, const char *sprite)
 {
 	VEC pos = this->getPos();
 	mvwprintw(main, pos.y, pos.x, sprite);
+}
+
+void	Entity::setLife(int l)
+{
+	this->life = l;
 }
