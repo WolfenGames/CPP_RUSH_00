@@ -173,6 +173,7 @@ void		GameManager::pushOnObjects(Entity *obj)
 			this->objects = new t_list;
 			this->objects->content = obj;
 			this->objects->next = NULL;
+			this->objects->previous = NULL;
 		}
 		else
 		{
@@ -181,6 +182,7 @@ void		GameManager::pushOnObjects(Entity *obj)
 			tmp->next = new t_list;
 			tmp->next->content = obj;
 			tmp->next->next = NULL;
+			tmp->next->previous = tmp;
 		}
 	}
 }
@@ -269,7 +271,6 @@ void		GameManager::DrawProjectiles(void)
 	}
 }
 
-#include <sstream>
 void		GameManager::checkObjs(void)
 {
 	t_list	*tmp;
@@ -281,7 +282,10 @@ void		GameManager::checkObjs(void)
 		if (this->player.getPos().x == obj->getPos().x 
 			&& this->player.getPos().y == obj->getPos().y)
 		{
-			this->GameOver = true;
+			this->player.setLife(-1);
+			obj->setPos(rand() % this->max_x, rand() % this->max_y);
+			if (!this->player.getLife())
+				this->GameOver = true;
 		}
 		tmp = tmp->next;
 	}
