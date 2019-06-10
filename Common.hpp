@@ -17,6 +17,7 @@ typedef struct	s_list
 {
 	void		*content;
 	s_list		*next;
+	s_list		*previous;
 }				t_list;
 
 struct VEC

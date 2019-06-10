@@ -29,6 +29,7 @@ class Projectile: public Entity
 	
 	private:
 		int		lifespan;
+		std::string sprite;
 };
 
 

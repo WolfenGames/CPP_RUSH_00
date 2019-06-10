@@ -72,11 +72,13 @@ void Player::addBullet(VEC pos){
         this->bullets = new t_list;
         this->bullets->content = bullet;
         this->bullets->next = NULL;
+        this->bullets->previous = NULL;
     } else {
         while(runner->next)
             runner = runner->next;
         runner->next = new t_list;
         runner->next->content = bullet;
+        runner->next->previous = runner;
         runner->next->next = NULL;
     }
 }
@@ -86,6 +88,8 @@ void Player::killBullet(VEC pos){
         Projectile *tmp = (Projectile *)runner->content;
         VEC current = tmp->getPos();
         if (pos.x == current.x && pos.y == current.y && pos.heading == current.heading){
+            runner->next->previous = runner->previous;
+            runner->previous->next = runner->next;
             delete (Projectile *)runner->content;
             delete runner;
         }
