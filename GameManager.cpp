@@ -309,13 +309,27 @@ void		GameManager::checkProjectile(Projectile *bullet){
 		Epos = En->getPos();
 		Bpos = bullet->getPos();
 
-		if (Epos.x == Bpos.x && Epos.y == Bpos.y)
+		if (!En->isBig)
 		{
-			Bpos.x = this->max_x;
-			Bpos.y = this->max_y;
-			bullet->setPos(Bpos);
-			En->setPos(Bpos);
+			if (Epos.x == Bpos.x &&( Epos.y == Bpos.y || Epos.y+1 == Bpos.y || Epos.y-1 == Bpos.y ))
+			{
+				Bpos.x = this->max_x;
+				Bpos.y = this->max_y;
+				bullet->setPos(Bpos);
+				En->setPos(Bpos);
+			}
 		}
+		else
+		{
+			if (Epos.x == Bpos.x && Epos.y == Bpos.y)// || Epos.y+1 == Bpos.y || Epos.y-1 == Bpos.y ))
+			{
+				Bpos.x = this->max_x;
+				Bpos.y = this->max_y;
+				bullet->setPos(Bpos);
+				En->setPos(Bpos);
+			}
+		}
+		
 		runner = runner->next;
 	}
 }
