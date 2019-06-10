@@ -106,13 +106,21 @@ void	GameManager::DrawBackground(void)
 void	GameManager::DrawPlayer(void){
 	VEC pos = this->player.getPos();
 	if (pos.heading == 0){
+		wattron(this->main, COLOR_PAIR(5));
 		this->player.renderDown(this->main, "v");
+		wattroff(this->main, COLOR_PAIR(5));
 	} else if (pos.heading == 1){
+		wattron(this->main, COLOR_PAIR(5));
 		this->player.renderUp(this->main, "^");
+		wattroff(this->main, COLOR_PAIR(5));
 	}  else if (pos.heading == 2){
-		this->player.renderLeft(this->main, "<");		
+		wattron(this->main, COLOR_PAIR(5));
+		this->player.renderLeft(this->main, "<");	
+		wattroff(this->main, COLOR_PAIR(5));	
 	} else if (pos.heading == 3){
+		wattron(this->main, COLOR_PAIR(5));
 		this->player.renderRight(this->main, ">");
+		wattroff(this->main, COLOR_PAIR(5));
 	}
 }
 
@@ -149,6 +157,7 @@ void		GameManager::Update(void){
 	while(1) 
 	{
 		this->player.getPlayerInput(this->main);
+		wattroff(this->main, COLOR_PAIR(5));
 		this->Draw();
 		this->tick++;
 		this->swap++;
