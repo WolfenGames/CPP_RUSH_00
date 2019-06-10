@@ -24,9 +24,9 @@ int		main(void)
 {
 	srand(time(NULL));
 	GameManager manager;
-
-	manager.Init();
+	
 	manager.Update();
+	manager.Init();
 
 	endwin();
 	return (0);

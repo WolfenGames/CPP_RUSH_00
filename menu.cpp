@@ -1,14 +1,9 @@
 #include <ncurses.h>
 #include <string>
 #include <iostream>
-using namespace std;
 
-int main(int argc, char **argv)
+bool	canStart(void)
 {
-    initscr();
-    noecho();
-    cbreak();
-
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
@@ -52,10 +47,14 @@ int main(int argc, char **argv)
         if(choice == 10)
             break;
     }
-        std::cout << std::endl <<"You chose: " << choices[highlight].c_str();
-
-    getch();
-    endwin();
-
-    return 0;
+    if (choices[highlight] == "Play")
+	{
+		delwin(menuwin);
+		return true;
+	}
+	else
+	{
+		delwin(menuwin);
+		return false;
+	}
 }
