@@ -6,7 +6,7 @@
 /*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 15:30:34 by rde-beer         ###   ########.fr       */
+/*   Updated: 2019/06/10 16:13:53 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,15 +341,10 @@ bool	GameManager::canStart(void)
 		delwin(menuwin);
 		return true;
 	}
-	else if (choices[highlight] == choices[1])
+	else
 	{
-		delwin(menuwin);
-		return true;
-	}
-	else// if (choices[highlight] == choices[2])
-	{
-		this->restart = false;
-		delwin(this->main);
+		//this->restart = false;
+		//delwin(this->main);
 		return false;
 	}
 }
