@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwolf <jwolf@student.wethinkcode.co.za>    +#+  +:+       +#+        */
+/*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 13:37:29 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/09 15:58:08 by jwolf            ###   ########.fr       */
+/*   Updated: 2019/06/10 16:57:41 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ class Player: public Entity
 	Player();
 	~Player();
 	void getPlayerInput(WINDOW *);
-        void shoot();
+	void shoot();
 	void addBullet(VEC);
 	t_list *getProjectiles();
 	void killBullet(VEC);
+	int	getLifes(void);
 
 	private:
 	t_list *bullets;
