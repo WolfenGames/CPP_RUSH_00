@@ -51,7 +51,7 @@ void		GameManager::Init(void)
 	startPos.y = 5;
 	startPos.heading = 1;
 	this->player.setPos(startPos);
-	this->secondsLeft = 20 * 60;
+	this->secondsLeft = (120 * 60);
 }
 
 void	GameManager::DrawBackground(void)
@@ -247,7 +247,7 @@ void		GameManager::Update(void){
 void GameManager::showTimer(void) 
 {
 	wattron(this->main, COLOR_PAIR(2));
-	mvwprintw(this->main, 0, 0, "%i", this->secondsLeft/60);
+	mvwprintw(this->main, 0, 0, "%i", this->secondsLeft / 60);
 	wattroff(this->main, COLOR_PAIR(2));
 	this->secondsLeft -= 5;
 }
