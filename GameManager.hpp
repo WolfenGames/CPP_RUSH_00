@@ -6,7 +6,7 @@
 /*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:59 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 14:15:38 by rde-beer         ###   ########.fr       */
+/*   Updated: 2019/06/10 15:10:35 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include "player.hpp"
 #include "Common.hpp"
+#include "Projectile.hpp"
 
 class GameManager
 {
@@ -26,6 +27,7 @@ class GameManager
 		WINDOW	*score;
 		Player	player;
 		t_list	*objects;
+		t_list	*projectiles;
 		int 	max_y;
 		int		max_x;
 		int 	state;
@@ -33,9 +35,6 @@ class GameManager
 		int		maxStars;
 		int		currStars;
 		int		tick;
-		void	pushOnObjects(Entity*);
-		bool	entityExists(Entity*, t_list*);
-		void	checkObjs(void);
 
 	public:
 		GameManager(void);
@@ -43,8 +42,9 @@ class GameManager
 		// Menu	menu;
   		int 	secondsLeft;// = 120;
 		bool	canStart(void);
-		bool	restart;
 		void	showTimer(void);
+		bool	GameOver;
+		bool	restart;
 		void	Update(void);
 		void	Draw(void);
 		void	Init(void);
@@ -52,8 +52,14 @@ class GameManager
 		void	DrawBackground(void);
 		void	DrawPlayer(void);
 		void	DrawEntities(void);
+		void	DrawProjectiles(void);
 		void	createEnemies(void);
 		void	gameOver(void);
+		void	pushOnObjects(Entity*);
+		void	pushOnProjectiles(Projectile*);
+		bool	entityExists(Entity*, t_list*);
+		void	checkObjs(void);
+		void	checkProjectile(void);
 };
 
 #endif

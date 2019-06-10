@@ -15,33 +15,20 @@
 
 #include	<string>
 #include	<curses.h>
-#include "Common.hpp"
+#include	"Common.hpp"
+#include	"Entity.hpp"
 
 
-class Projectile
+class Projectile: public Entity
 {
 	private:
-		VEC				dir;
-		VEC				pos;
-		std::string		up[2];
-		std::string		down[2];
-		std::string		left;
-		std::string		right;
 		int				lifespan;
-		WINDOW			*win;
 
 	public:
 		Projectile(void);
-		Projectile(VEC, VEC, WINDOW *);
 		Projectile(const Projectile&);
 		Projectile &operator=(const Projectile&);
 		~Projectile();
-		void		setLeft(std::string);
-		void		setRight(std::string);
-		void		setUp(std::string[]);
-		void		setDown(std::string[]);
-		void		move(void);
-		void		shoot(VEC, VEC);
 };
 
 

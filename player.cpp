@@ -14,6 +14,7 @@
 #include <curses.h>
 
 Player::Player(void):Entity() {
+    this->bullets = NULL;
 	this->setLife(3);
 }
 Player::~Player(void) {}
@@ -21,18 +22,40 @@ Player::~Player(void) {}
 void Player::getPlayerInput(WINDOW *main){
     int input = wgetch(main);
     VEC pos = this->getPos();
+
+    int xSpeed = 2;
+    int ySpeed = 1;
+
     if (input == KEY_UP){
-        pos.y--;
+        pos.y -= ySpeed;
         pos.heading = 1;
     } else if (input == KEY_DOWN){
-        pos.y++;
+        pos.y += ySpeed;
         pos.heading = 0;
     }  else if (input == KEY_LEFT){
-        pos.x -= 2;
+        pos.x -= xSpeed;
         pos.heading = 2;
     }  else if (input == KEY_RIGHT){
-        pos.x += 2;
+        pos.x += xSpeed;
         pos.heading = 3;
+    } else if (input == ' '){
+        this->shoot();
     }
 	this->setPos(pos);
+}
+
+
+void Player::shoot(){
+    VEC pos = this->getPos();
+
+    if (pos.heading == 1){
+        pos.y--;
+    } else if (pos.heading == 0){
+        pos.y++;
+    } else if (pos.heading == 2){
+        pos.x--;
+    } else if (pos.heading == 3){
+        pos.x++;
+    }
+    //add bullets to player array
 }

@@ -6,7 +6,7 @@
 /*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 15:05:05 by rde-beer         ###   ########.fr       */
+/*   Updated: 2019/06/10 15:11:14 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void		GameManager::Init(void)
 	startPos.y = 5;
 	startPos.heading = 1;
 	this->player.setPos(startPos);
-	this->secondsLeft = 5 * 60;
 	this->restart = 1;
+	this->secondsLeft = (120 * 60);
 }
 
 void	GameManager::DrawBackground(void)
@@ -110,6 +110,17 @@ void	GameManager::DrawBackground(void)
 void	GameManager::DrawPlayer(void){
 	VEC pos = this->player.getPos();
 	wattron(this->main, COLOR_PAIR(5));
+	//Check border
+	if (pos.x >= this->max_x - 1){
+		pos.x = this->max_x-2;
+	} else if (pos.x <= 0){
+		pos.x = 1;
+	} else if (pos.y >= this->max_y - 1){
+		pos.y = this->max_y -2;
+	} else if (pos.y <= 0){
+		pos.y = 1;
+	}
+	this->player.setPos(pos);
 	if (pos.heading == 0){
 		this->player.renderDown(this->main, "v");
 	} else if (pos.heading == 1){
@@ -139,9 +150,9 @@ void		GameManager::Draw(void)
 						(int)bordTopLcor, (int)bordTopRcor, 
 						(int)bordBotLcor, (int)bordBotRcor);
 	this->DrawBackground();
+	this->DrawEntities();
 	this->DrawPlayer();
 	this->showTimer();
-	this->DrawEntities();
 	wrefresh(this->main);
 }
 
@@ -153,9 +164,8 @@ void		GameManager::pushOnObjects(Entity *obj)
 	t_list *tmp;
 
 	tmp = this->objects;
-	if (obj && !entityExists(obj, tmp))
+	if (obj)
 	{
-		mvwaddstr(this->main, 2, 4, "exists");
 		tmp = this->objects;
 		if (!this->objects)
 		{
@@ -174,19 +184,39 @@ void		GameManager::pushOnObjects(Entity *obj)
 	}
 }
 
-#include <sstream>
+void		GameManager::pushOnProjectiles(Projectile *obj)
+{
+	t_list *tmp;
+
+	tmp = this->objects;
+	if (obj)
+	{
+		tmp = this->objects;
+		if (!this->objects)
+		{
+			this->objects = new t_list;
+			this->objects->content = obj;
+			this->objects->next = NULL;
+		}
+		else
+		{
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = new t_list;
+			tmp->next->content = obj;
+			tmp->next->next = NULL;
+		}
+	}
+}
+
 void		GameManager::DrawEntities(void)
 {
 	t_list *tmp;
 
 	tmp = this->objects;
-	int i = 0;
-	std::stringstream ss;
 	while (tmp)
 	{
-		i++;
 		Entity *x = (Entity*)tmp->content;
-		ss << x->getPos().x;
 		wattron(this->main, COLOR_PAIR(4));
 		mvwprintw(this->main, x->getPos().y, x->getPos().x, "#");
 		wattroff(this->main, COLOR_PAIR(4));
@@ -194,20 +224,38 @@ void		GameManager::DrawEntities(void)
 	}
 }
 
-bool		GameManager::entityExists(Entity *obj, t_list *lst)
+void		GameManager::DrawProjectiles(void)
 {
-	if (!this->objects)
-		return false;
-	if (this->objects->content == obj)
-		return true;
-	return this->entityExists(obj, lst->next);
+	t_list *tmp;
+
+	tmp = this->projectiles;
+	while (tmp)
+	{
+		Projectile *x = (Projectile*)tmp->content;
+		wattron(this->main, COLOR_PAIR(4));
+		//Position based on heading
+		mvwprintw(this->main, x->getPos().y, x->getPos().x, "#");
+		wattroff(this->main, COLOR_PAIR(4));
+		tmp = tmp->next;
+	}
 }
 
+#include <sstream>
 void		GameManager::checkObjs(void)
 {
 	t_list	*tmp;
 
 	tmp = this->objects;
+	while (tmp != NULL)
+	{
+		Entity *obj = (Entity *)tmp->content;
+		if (this->player.getPos().x == obj->getPos().x 
+			&& this->player.getPos().y == obj->getPos().y)
+		{
+			this->GameOver = true;
+		}
+		tmp = tmp->next;
+	}
 }
 
 void		GameManager::createEnemies(void)
@@ -215,7 +263,7 @@ void		GameManager::createEnemies(void)
 	for (int i = 0; i < 20; i++)
 	{
 		Entity *newE = new Entity();
-		newE->setPos(rand() % 20, rand() % 20);
+		newE->setPos(rand() % this->max_x, rand() % this->max_y);
 		this->pushOnObjects(newE);
 	}
 }
@@ -223,10 +271,11 @@ void		GameManager::createEnemies(void)
 void		GameManager::Update(void){
 	this->currStars = 0;
 	this->maxStars = 40;
-	while(this->secondsLeft >= 0) 
+	while(this->secondsLeft >= 0 && !this->GameOver) 
 	{
 		this->player.getPlayerInput(this->main);
 		wattroff(this->main, COLOR_PAIR(5));
+		this->checkObjs();
 		this->Draw();
 		this->tick++;
 		this->swap++;
@@ -234,10 +283,10 @@ void		GameManager::Update(void){
 	}
 }
 
-void GameManager::showTimer(void) 
+void 		GameManager::showTimer(void) 
 {
 	wattron(this->main, COLOR_PAIR(2));
-	mvwprintw(this->main, 0, 0, "%i", this->secondsLeft/60);
+	mvwprintw(this->main, 0, 0, "%i", this->secondsLeft / 60);
 	wattroff(this->main, COLOR_PAIR(2));
 	this->secondsLeft -= 5;
 }
@@ -254,7 +303,7 @@ bool	GameManager::canStart(void)
 
     keypad(menuwin, true);
 
-    std::string choices[] = {"Play", "Retry", "Exit"};
+    std::string choices[] = {"Play", "Exit"};
     size_t choice;
     size_t highlight = 0;
 
