@@ -15,7 +15,7 @@
 
 Player::Player(void):Entity() {
 	this->setLife(3);
-    // this->Projectile = NULL;
+    this->bullets = NULL;
 }
 Player::~Player(void) {}
 
@@ -58,4 +58,37 @@ void Player::shoot(){
         pos.x++;
     }
     //add bullets to player array
+    this->addBullet(pos);
+}
+
+void Player::addBullet(VEC pos){
+    t_list *runner;
+    Projectile *bullet = new Projectile;
+    //bullet->setPos(pos);
+    (void)pos;
+
+    runner = this->bullets;
+    if (!this->bullets){
+        this->bullets = new t_list;
+        this->bullets->content = bullet;
+        this->bullets->next = NULL;
+    } else {
+        while(runner->next)
+            runner = runner->next;
+        runner->next = new t_list;
+        runner->next->content = bullet;
+        runner->next->next = NULL;
+    }
+}
+void Player::killBullet(VEC pos){
+    t_list *runner = this->bullets;
+    while (runner){
+        Projectile *tmp = (Projectile *)runner->content;
+        VEC current = tmp->getPos();
+        if (pos.x == current.x && pos.y == current.y && pos.heading == current.heading){
+            delete (Projectile *)runner->content;
+            delete runner;
+        }
+
+    }
 }
