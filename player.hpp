@@ -18,12 +18,15 @@
 class Player: public Entity
 {
 	public:
-		Player();
-		~Player();
-		void getPlayerInput(WINDOW *);
+	Player();
+	~Player();
+	void getPlayerInput(WINDOW *);
         void shoot();
+	// void killBullet();
+
 	private:
-        Entity **bullets;
+	// t_list *bullets;
+
 };
 
 #endif
