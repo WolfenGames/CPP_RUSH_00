@@ -23,10 +23,11 @@ int		main(void)
 {
 	srand(time(NULL));
 	GameManager manager;
-		manager.Init();
+	manager.Init();
 	if(manager.canStart())
 	{
 		manager.showTimer();
+		//manager.createEnemies();
 		manager.Update();
 	}
 

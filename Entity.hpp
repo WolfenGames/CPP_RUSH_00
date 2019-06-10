@@ -26,6 +26,7 @@ class Entity {
 		void	renderDown(WINDOW *,const char *sprite);
 		
 		void	setPos(VEC);
+		void	setPos(int, int);
 		VEC		getPos(void);
 		void	setLife(int);
 	private:

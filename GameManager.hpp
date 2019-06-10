@@ -33,7 +33,7 @@ class GameManager
 		int		maxStars;
 		int		currStars;
 		int		tick;
-  		int secondsLeft;// = 120;
+  		int 	secondsLeft;// = 120;
 		void	pushOnObjects(Entity*);
 		bool	entityExists(Entity*, t_list*);
 		void	checkObjs(void);
@@ -50,6 +50,8 @@ class GameManager
 		void	Destroy(void);
 		void	DrawBackground(void);
 		void	DrawPlayer(void);
+		void	DrawEntities(void);
+		void	createEnemies(void);
 };
 
 #endif

@@ -15,7 +15,9 @@
 #include <iostream>
 
 GameManager::GameManager(void)
-{}
+{
+	this->objects = NULL;
+}
 
 void		GameManager::Init(void)
 {
@@ -121,10 +123,8 @@ void	GameManager::DrawPlayer(void){
 
 void		GameManager::Draw(void)
 {
-	char bordTop = '=';
-	char bordBot = '=';
-	char bordLeft = '|';
-	char bordRight = '|';
+	char bordTopAndBot = '=';
+	char bordLeftAndRight = '|';
 	char bordTopLcor = '.';
 	char bordTopRcor = '.';
 	char bordBotLcor = '`';
@@ -133,13 +133,14 @@ void		GameManager::Draw(void)
 	werase(this->main);
 	wclear(this->main);
 	wattron(this->main, A_BOLD);
-	wborder(this->main, (int)bordLeft, (int)bordRight, 
-						(int)bordTop, (int)bordBot, 
+	wborder(this->main, (int)bordLeftAndRight, (int)bordLeftAndRight, 
+						(int)bordTopAndBot, (int)bordTopAndBot, 
 						(int)bordTopLcor, (int)bordTopRcor, 
 						(int)bordBotLcor, (int)bordBotRcor);
 	this->DrawBackground();
 	this->DrawPlayer();
 	this->showTimer();
+	this->DrawEntities();
 	wrefresh(this->main);
 }
 
@@ -153,6 +154,8 @@ void		GameManager::pushOnObjects(Entity *obj)
 	tmp = this->objects;
 	if (obj && !entityExists(obj, tmp))
 	{
+		mvwaddstr(this->main, 2, 4, "exists");
+		tmp = this->objects;
 		if (!this->objects)
 		{
 			this->objects = new t_list;
@@ -167,6 +170,26 @@ void		GameManager::pushOnObjects(Entity *obj)
 			tmp->next->content = obj;
 			tmp->next->next = NULL;
 		}
+	}
+}
+
+#include <sstream>
+void		GameManager::DrawEntities(void)
+{
+	t_list *tmp;
+
+	tmp = this->objects;
+	int i = 0;
+	std::stringstream ss;
+	while (tmp)
+	{
+		i++;
+		Entity *x = (Entity*)tmp->content;
+		ss << x->getPos().x;
+		wattron(this->main, COLOR_PAIR(4));
+		mvwprintw(this->main, x->getPos().y, x->getPos().x, "#");
+		wattroff(this->main, COLOR_PAIR(4));
+		tmp = tmp->next;
 	}
 }
 
@@ -186,10 +209,19 @@ void		GameManager::checkObjs(void)
 	tmp = this->objects;
 }
 
+void		GameManager::createEnemies(void)
+{
+	for (int i = 0; i < 20; i++)
+	{
+		Entity *newE = new Entity();
+		newE->setPos(rand() % 20, rand() % 20);
+		this->pushOnObjects(newE);
+	}
+}
+
 void		GameManager::Update(void){
 	this->currStars = 0;
 	this->maxStars = 40;
-	
 	while(this->secondsLeft >= 0) 
 	{
 		this->player.getPlayerInput(this->main);
