@@ -6,7 +6,7 @@
 /*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:59 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 10:24:19 by rde-beer         ###   ########.fr       */
+/*   Updated: 2019/06/10 10:46:15 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ class GameManager
 		GameManager(void);
 		~GameManager();
 		// Menu	menu;
+		void	timer(void);
 		bool	canStart(void);
 		void	Update(void);
 		void	Draw(void);

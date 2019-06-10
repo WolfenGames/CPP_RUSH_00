@@ -6,7 +6,7 @@
 /*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 10:24:48 by rde-beer         ###   ########.fr       */
+/*   Updated: 2019/06/10 10:49:58 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,21 @@ void		GameManager::Update(void){
 		this->swap++;
 		this->currStars = 0;
 	}
+}
+
+void GameManager::timer(void) 
+{
+  int secondsLeft = 120;
+  initscr();
+  curs_set(0);
+  do {
+    printw("%i", secondsLeft);
+    refresh();
+    erase();
+    secondsLeft--;
+    napms(1000);
+  } while (secondsLeft > 0);
+  endwin();
 }
 
 bool	GameManager::canStart(void)
