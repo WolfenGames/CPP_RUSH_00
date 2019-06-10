@@ -109,6 +109,17 @@ void	GameManager::DrawBackground(void)
 void	GameManager::DrawPlayer(void){
 	VEC pos = this->player.getPos();
 	wattron(this->main, COLOR_PAIR(5));
+	//Check border
+	if (pos.x >= this->max_x - 1){
+		pos.x = this->max_x-2;
+	} else if (pos.x <= 0){
+		pos.x = 1;
+	} else if (pos.y >= this->max_y - 1){
+		pos.y = this->max_y -2;
+	} else if (pos.y <= 0){
+		pos.y = 1;
+	}
+	this->player.setPos(pos);
 	if (pos.heading == 0){
 		this->player.renderDown(this->main, "v");
 	} else if (pos.heading == 1){
