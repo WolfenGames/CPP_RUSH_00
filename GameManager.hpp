@@ -6,7 +6,7 @@
 /*   By: tramants <tramants@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:59 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 14:11:32 by tramants         ###   ########.fr       */
+/*   Updated: 2019/06/10 15:10:35 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,16 @@ class GameManager
 		int		maxStars;
 		int		currStars;
 		int		tick;
-  		int 	secondsLeft;// = 120;
 
 	public:
 		GameManager(void);
 		~GameManager();
 		// Menu	menu;
-		void	showTimer(void);
+  		int 	secondsLeft;// = 120;
 		bool	canStart(void);
+		void	showTimer(void);
 		bool	GameOver;
+		bool	restart;
 		void	Update(void);
 		void	Draw(void);
 		void	Init(void);
@@ -55,13 +56,14 @@ class GameManager
 		void	DrawEntities(void);
 		void	DrawProjectiles(void);
 		void	createEnemies(void);
+		void	gameOver(void);
 		void	pushOnObjects(Entity*);
 		void	pushOnProjectiles(Projectile*);
 		bool	entityExists(Entity*, t_list*);
 		void	checkObjs(void);
 		void	checkProjectile(void);
 		void	DrawEnemies(void);
-		void	UpdateEnemies();
+		void	UpdateEnemies(void);
 };
 
 #endif

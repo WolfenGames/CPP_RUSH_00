@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   GameManager.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tramants <tramants@student.wethinkcode.    +#+  +:+       +#+        */
+/*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 15:40:41 by tramants         ###   ########.fr       */
+/*   Updated: 2019/06/10 16:23:54 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void		GameManager::Init(void)
 	startPos.y = this->max_y / 2;
 	startPos.heading = 2;
 	this->player.setPos(startPos);
+	this->restart = 1;
 	this->secondsLeft = (120 * 60);
 }
 
@@ -173,6 +174,7 @@ void		GameManager::pushOnObjects(Entity *obj)
 			this->objects = new t_list;
 			this->objects->content = obj;
 			this->objects->next = NULL;
+			this->objects->previous = NULL;
 		}
 		else
 		{
@@ -181,6 +183,7 @@ void		GameManager::pushOnObjects(Entity *obj)
 			tmp->next = new t_list;
 			tmp->next->content = obj;
 			tmp->next->next = NULL;
+			tmp->next->previous = tmp;
 		}
 	}
 }
@@ -280,7 +283,6 @@ void		GameManager::DrawProjectiles(void)
 	}
 }
 
-#include <sstream>
 void		GameManager::checkObjs(void)
 {
 	t_list	*tmp;
@@ -292,7 +294,10 @@ void		GameManager::checkObjs(void)
 		if (this->player.getPos().x == obj->getPos().x 
 			&& this->player.getPos().y == obj->getPos().y)
 		{
-			this->GameOver = true;
+			this->player.setLife(-1);
+			obj->setPos(rand() % this->max_x, rand() % this->max_y);
+			if (!this->player.getLife())
+				this->GameOver = true;
 		}
 		tmp = tmp->next;
 	}
@@ -344,13 +349,13 @@ bool	GameManager::canStart(void)
 
     keypad(menuwin, true);
 
-    std::string choices[2] = {"Play", "Exit"};
-    int choice;
-    int highlight = 0;
+    std::string choices[] = {"Play", "Exit"};
+    size_t choice;
+    size_t highlight = 0;
 
     while(1)
     {
-        for(int i = 0; i < 2; i++)
+        for(size_t i = 0; i < (sizeof(choices)/sizeof(choices[0])); i++)
         {
             if(i == highlight)
                 wattron(menuwin, A_REVERSE);
@@ -363,13 +368,13 @@ bool	GameManager::canStart(void)
         {
             case KEY_UP:
                 highlight--;
-                if(highlight == -1)
+                if((int)highlight == -1)
                     highlight = 0;
                 break;
             case KEY_DOWN:
                 highlight++;
-                if(highlight == 2)
-                    highlight = 1;
+                if(highlight == 3)
+                    highlight = 2;
                 break;
             default:
                 break;
@@ -377,14 +382,43 @@ bool	GameManager::canStart(void)
         if(choice == 10)
             break;
     }
-    if (choices[highlight] == "Play")
+    if (choices[highlight] == choices[0])
 	{
 		delwin(menuwin);
 		return true;
 	}
 	else
 	{
-		delwin(menuwin);
+		//this->restart = false;
+		delwin(this->main);
 		return false;
 	}
+}
+
+void	GameManager::gameOver(void)
+{
+	int yMax, xMax;
+	delwin(this->main);
+	getmaxyx(stdscr, yMax, xMax);
+	this->main = newwin(6, xMax, yMax, 5);
+	nodelay(this->main, true);
+	keypad(this->main, true);
+	while (1)
+	{
+		wclear(this->main);
+		box(this->main, 0, 0);
+		refresh();
+		wrefresh(this->main);
+		mvprintw(2, 5," ####    ##   #    # ######     ####  #    # ###### #####");
+		mvprintw(3, 5,"#    #  #  #  ##  ## #         #    # #    # #      #    #");
+		mvprintw(4, 5,"#      #    # # ## # #####     #    # #    # #####  #    #");
+		mvprintw(5, 5,"#  ### ###### #    # #         #    # #    # #      #####");
+		mvprintw(6, 5,"#    # #    # #    # #         #    #  #  #  #      #   #");
+		mvprintw(7, 5," ####  #    # #    # ######     ####    ##   ###### #    #");
+		mvprintw(15, 10, "Press up to continue");
+		int x = wgetch(this->main);
+		if (x >= 0)
+			break;
+	}
+	sleep(2);
 }
