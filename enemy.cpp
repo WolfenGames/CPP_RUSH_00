@@ -32,22 +32,21 @@ void    Enemy::updateMovement(int max_y, int max_x)
         } else {
             enemyPos.x = enemyPos.x + 1;
         }
-    } else if (enemyPos.y < max_y && enemyPos.y + 2 != max_y) {
-        if (enemyPos.y == 0) {
-            enemyPos.y = enemyPos.y + 2;
-        } else {
-            enemyPos.y = enemyPos.y + 1;
-        }
-    } else if ((enemyPos.x + 2) == max_x && (enemyPos.y + 2) == max_y) {
-        int randX = rand() % max_x;
+    }
+	if ((enemyPos.x + 2) == max_x)
+	{
+		int randX = rand() % max_x;
         int randY = rand() % max_y;
+
+		if (randY <= 1) randY += 3;
+		if (randY >= max_x - 1) randY -= 3;
 
         if(randY == 0 || randY == max_y) {
             randY = 1;
         } else if(randX == 0 || randX == max_y) {
             randX = 1;
         }
-        enemyPos.x = randX;
+        enemyPos.x = randX - 15;
         enemyPos.y = randY;
     }
     // enemyPos.y = enemyPos.y + 1;
