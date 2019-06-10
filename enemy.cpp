@@ -6,7 +6,7 @@
 /*   By: tramants <tramants@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 10:44:21 by tramants          #+#    #+#             */
-/*   Updated: 2019/06/10 15:49:32 by tramants         ###   ########.fr       */
+/*   Updated: 2019/06/10 15:54:02 by tramants         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void    Enemy::updateMovement(int max_y, int max_x)
             enemyPos.x = enemyPos.x + 1;
         }
     }
-	if ((enemyPos.x + 2) == max_x)
+	if (enemyPos.x + 2 == max_x)
 	{
 		int randX = 2;
         int randY = rand() % max_y;
@@ -53,14 +53,8 @@ void    Enemy::updateMovement(int max_y, int max_x)
         if(randY == 0 || randY == max_y) {
             randY = 1;
         } 
-        // else if(randX == 0 || randX == max_y) {
-        //     randX = 1;
-        // }
         enemyPos.x = randX;
         enemyPos.y = randY;
     }
-    // enemyPos.y = enemyPos.y + 1;
-    // enemyPos.x = enemyPos.x + 1;
-
     this->setPos(enemyPos);
 }
