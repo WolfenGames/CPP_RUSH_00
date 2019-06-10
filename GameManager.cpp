@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   GameManager.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tramants <tramants@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 11:25:29 by rde-beer         ###   ########.fr       */
+/*   Updated: 2019/06/10 14:22:49 by tramants         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,8 @@ void		GameManager::Draw(void)
 	this->DrawBackground();
 	this->DrawPlayer();
 	this->showTimer();
-	this->DrawEntities();
+	// this->DrawEntities();
+	this->DrawEnemies();
 	wrefresh(this->main);
 }
 
@@ -223,6 +224,34 @@ void		GameManager::DrawEntities(void)
 	}
 }
 
+void		GameManager::DrawEnemies(void)
+{
+	t_list *tmp;
+
+	tmp = this->objects;
+	while (tmp)
+	{
+		Entity *x = (Entity*)tmp->content;
+		wattron(this->main, COLOR_PAIR(4));		
+		mvwprintw(this->main, x->getPos().y, x->getPos().x, "#");
+		wattroff(this->main, COLOR_PAIR(4));
+		tmp = tmp->next;
+	}
+}
+
+void		GameManager::UpdateEnemies()
+{
+	t_list *tmp;
+
+	tmp = this->objects;
+	while (tmp)
+	{
+		Enemy *x = (Enemy*)tmp->content;
+		x->updateMovement(this->max_y, this->max_x);
+		tmp = tmp->next;
+	}
+}
+
 void		GameManager::DrawProjectiles(void)
 {
 	t_list *tmp;
@@ -263,6 +292,7 @@ void		GameManager::Update(void){
 	{
 		this->player.getPlayerInput(this->main);
 		wattroff(this->main, COLOR_PAIR(5));
+		this->UpdateEnemies();
 		this->Draw();
 		this->tick++;
 		this->swap++;
