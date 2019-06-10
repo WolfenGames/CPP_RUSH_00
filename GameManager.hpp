@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   GameManager.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwolf <jwolf@student.wethinkcode.co.za>    +#+  +:+       +#+        */
+/*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:59 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/09 15:28:01 by jwolf            ###   ########.fr       */
+/*   Updated: 2019/06/10 10:24:19 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ class GameManager
 	public:
 		GameManager(void);
 		~GameManager();
+		// Menu	menu;
+		bool	canStart(void);
 		void	Update(void);
 		void	Draw(void);
 		void	Init(void);

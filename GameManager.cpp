@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   GameManager.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwolf <jwolf@student.wethinkcode.co.za>    +#+  +:+       +#+        */
+/*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/09 15:57:59 by jwolf            ###   ########.fr       */
+/*   Updated: 2019/06/10 10:24:48 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,5 +196,62 @@ void		GameManager::Update(void){
 		this->tick++;
 		this->swap++;
 		this->currStars = 0;
+	}
+}
+
+bool	GameManager::canStart(void)
+{
+    int yMax, xMax;
+    getmaxyx(stdscr, yMax, xMax);
+
+    WINDOW * menuwin = newwin(6, xMax-12, yMax-8, 5);
+    box(menuwin, 0, 0);
+    refresh();
+    wrefresh(menuwin);
+
+    keypad(menuwin, true);
+
+    std::string choices[3] = {"Play", "Instructions", "Exit"};
+    int choice;
+    int highlight = 0;
+
+    while(1)
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            if(i == highlight)
+                wattron(menuwin, A_REVERSE);
+            mvwprintw(menuwin, i+1, 1, choices[i].c_str());
+            wattroff(menuwin, A_REVERSE);
+        }
+        choice = wgetch(menuwin);
+
+        switch(choice)
+        {
+            case KEY_UP:
+                highlight--;
+                if(highlight == -1)
+                    highlight = 0;
+                break;
+            case KEY_DOWN:
+                highlight++;
+                if(highlight == 3)
+                    highlight = 2;
+                break;
+            default:
+                break;
+        }
+        if(choice == 10)
+            break;
+    }
+    if (choices[highlight] == "Play")
+	{
+		delwin(menuwin);
+		return true;
+	}
+	else
+	{
+		delwin(menuwin);
+		return false;
 	}
 }
