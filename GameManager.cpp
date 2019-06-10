@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   GameManager.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tramants <tramants@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 11:25:29 by rde-beer         ###   ########.fr       */
+/*   Updated: 2019/06/10 15:40:41 by tramants         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void		GameManager::Init(void)
 	init_pair(5, COLOR_BLUE, COLOR_BLACK);
 
 	VEC	startPos;
-	startPos.x = 4;
-	startPos.y = 5;
-	startPos.heading = 1;
+	startPos.x = this->max_x;
+	startPos.y = this->max_y / 2;
+	startPos.heading = 2;
 	this->player.setPos(startPos);
 	this->secondsLeft = (120 * 60);
 }
@@ -153,6 +153,7 @@ void		GameManager::Draw(void)
 	this->DrawPlayer();
 	this->DrawProjectiles();
 	this->showTimer();
+	this->DrawEnemies();
 	wrefresh(this->main);
 }
 
@@ -224,6 +225,34 @@ void		GameManager::DrawEntities(void)
 	}
 }
 
+void		GameManager::DrawEnemies(void)
+{
+	t_list *tmp;
+
+	tmp = this->objects;
+	while (tmp)
+	{
+		Entity *x = (Entity*)tmp->content;
+		wattron(this->main, COLOR_PAIR(4));		
+		mvwprintw(this->main, x->getPos().y, x->getPos().x, "#");
+		wattroff(this->main, COLOR_PAIR(4));
+		tmp = tmp->next;
+	}
+}
+
+void		GameManager::UpdateEnemies()
+{
+	t_list *tmp;
+
+	tmp = this->objects;
+	while (tmp)
+	{
+		Enemy *x = (Enemy*)tmp->content;
+		x->updateMovement(this->max_y, this->max_x);
+		tmp = tmp->next;
+	}
+}
+
 void		GameManager::DrawProjectiles(void)
 {
 	t_list *runner;
@@ -286,6 +315,7 @@ void		GameManager::Update(void){
 	{
 		this->player.getPlayerInput(this->main);
 		wattroff(this->main, COLOR_PAIR(5));
+		this->UpdateEnemies();
 		this->checkObjs();
 		this->Draw();
 		this->tick++;
