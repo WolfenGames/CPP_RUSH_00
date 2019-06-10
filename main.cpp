@@ -23,6 +23,7 @@ int		main(void)
 {
 	srand(time(NULL));
 	GameManager manager;
+	manager.GameOver = false;
 	manager.Init();
 	if(manager.canStart())
 	{
