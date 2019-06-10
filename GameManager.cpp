@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   GameManager.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tramants <tramants@student.wethinkcode.    +#+  +:+       +#+        */
+/*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 16:13:53 by rde-beer         ###   ########.fr       */
+/*   Updated: 2019/06/10 16:23:54 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,7 +374,7 @@ bool	GameManager::canStart(void)
 	else
 	{
 		//this->restart = false;
-		//delwin(this->main);
+		delwin(this->main);
 		return false;
 	}
 }
