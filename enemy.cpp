@@ -6,7 +6,7 @@
 /*   By: tramants <tramants@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 10:44:21 by tramants          #+#    #+#             */
-/*   Updated: 2019/06/10 15:09:28 by tramants         ###   ########.fr       */
+/*   Updated: 2019/06/10 15:54:02 by tramants         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,23 @@ void	Enemy::renderEnemy(WINDOW *main, const char *sprite)
 void    Enemy::updateMovement(int max_y, int max_x)
 {
     VEC enemyPos = this->getPos();
-    if (enemyPos.x < max_x && enemyPos.x + 2 != max_x && enemyPos.x) {
+    if (enemyPos.y == max_y || enemyPos.y + 1 == max_y) {
+        enemyPos.y = enemyPos.y - 2;
+    }
+    if (enemyPos.y == 0 || enemyPos.y == 1) {
+        enemyPos.y = enemyPos.y + 2;
+    }
+    if (
+        enemyPos.x < max_x 
+        && enemyPos.x + 2 != max_x 
+        ) {
         if (enemyPos.x == 0) {
             enemyPos.x = enemyPos.x + 2;
         } else {
             enemyPos.x = enemyPos.x + 1;
         }
     }
-	if ((enemyPos.x + 2) == max_x)
+	if (enemyPos.x + 2 == max_x)
 	{
 		int randX = rand() % 30;
         int randY = rand() % 30;
@@ -44,8 +53,5 @@ void    Enemy::updateMovement(int max_y, int max_x)
         enemyPos.x = randX - 15;
         enemyPos.y = randY;
     }
-    // enemyPos.y = enemyPos.y + 1;
-    // enemyPos.x = enemyPos.x + 1;
-
     this->setPos(enemyPos);
 }

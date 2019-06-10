@@ -6,7 +6,7 @@
 /*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 16:28:55 by rde-beer         ###   ########.fr       */
+/*   Updated: 2019/06/10 16:52:08 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void		GameManager::Init(void)
 	init_pair(5, COLOR_BLUE, COLOR_BLACK);
 
 	VEC	startPos;
-	startPos.x = 4;
-	startPos.y = 5;
-	startPos.heading = 1;
+	startPos.x = this->max_x;
+	startPos.y = this->max_y / 2;
+	startPos.heading = 2;
 	this->player.setPos(startPos);
 	this->restart = 1;
 	this->secondsLeft = (120 * 60);
@@ -152,6 +152,7 @@ void		GameManager::Draw(void)
 	this->DrawBackground();
 	this->DrawEntities();
 	this->DrawPlayer();
+	this->DrawProjectiles();
 	this->showTimer();
 	this->DrawEnemies();
 	wrefresh(this->main);
@@ -173,6 +174,7 @@ void		GameManager::pushOnObjects(Entity *obj)
 			this->objects = new t_list;
 			this->objects->content = obj;
 			this->objects->next = NULL;
+			this->objects->previous = NULL;
 		}
 		else
 		{
@@ -181,6 +183,7 @@ void		GameManager::pushOnObjects(Entity *obj)
 			tmp->next = new t_list;
 			tmp->next->content = obj;
 			tmp->next->next = NULL;
+			tmp->next->previous = tmp;
 		}
 	}
 }
@@ -255,21 +258,31 @@ void		GameManager::UpdateEnemies()
 
 void		GameManager::DrawProjectiles(void)
 {
-	t_list *tmp;
+	t_list *runner;
+	VEC pos;
 
-	tmp = this->projectiles;
-	while (tmp)
-	{
-		Projectile *x = (Projectile*)tmp->content;
-		wattron(this->main, COLOR_PAIR(4));
-		//Position based on heading
-		mvwprintw(this->main, x->getPos().y, x->getPos().x, "#");
-		wattroff(this->main, COLOR_PAIR(4));
-		tmp = tmp->next;
+	runner = this->player.getProjectiles();
+	while (runner){
+		Projectile *bullet = (Projectile *)runner->content;
+		pos = bullet->getPos();
+		if (pos.heading == 0){
+			mvwprintw(this->main, pos.y, pos.x, "|");
+			pos.y++;
+		} else if (pos.heading == 1){
+			mvwprintw(this->main, pos.y, pos.x, "|");
+			pos.y--;
+		} else if (pos.heading == 2){
+			mvwprintw(this->main, pos.y, pos.x, "-");
+			pos.x--;
+		} else if (pos.heading == 3){
+			mvwprintw(this->main, pos.y, pos.x, "-");
+			pos.x++;
+		}
+		bullet->setPos(pos);
+		runner = runner->next;
 	}
 }
 
-#include <sstream>
 void		GameManager::checkObjs(void)
 {
 	t_list	*tmp;
@@ -281,7 +294,10 @@ void		GameManager::checkObjs(void)
 		if (this->player.getPos().x == obj->getPos().x 
 			&& this->player.getPos().y == obj->getPos().y)
 		{
-			this->GameOver = true;
+			this->player.setLife(-1);
+			obj->setPos(rand() % this->max_x, rand() % this->max_y);
+			if (!this->player.IsAlive())
+				this->GameOver = true;
 		}
 		tmp = tmp->next;
 	}

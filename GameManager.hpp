@@ -63,7 +63,7 @@ class GameManager
 		void	checkObjs(void);
 		void	checkProjectile(void);
 		void	DrawEnemies(void);
-		void	UpdateEnemies();
+		void	UpdateEnemies(void);
 };
 
 #endif
