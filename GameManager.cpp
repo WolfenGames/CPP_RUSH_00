@@ -296,7 +296,7 @@ void		GameManager::checkObjs(void)
 		{
 			this->player.setLife(-1);
 			obj->setPos(rand() % this->max_x, rand() % this->max_y);
-			if (!this->player.getLife())
+			if (!this->player.IsAlive())
 				this->GameOver = true;
 		}
 		tmp = tmp->next;

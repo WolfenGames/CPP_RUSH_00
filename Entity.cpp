@@ -64,7 +64,12 @@ void	Entity::setLife(int l)
 	this->life += l;
 }
 
-bool	Entity::getLife(void)
+int		Entity::getLife(void)
+{
+	return (this->life);// > 0);
+}
+
+bool	Entity::IsAlive(void)
 {
 	return (this->life > 0);
 }
