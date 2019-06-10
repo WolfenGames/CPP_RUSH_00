@@ -149,9 +149,9 @@ void		GameManager::Draw(void)
 						(int)bordTopLcor, (int)bordTopRcor, 
 						(int)bordBotLcor, (int)bordBotRcor);
 	this->DrawBackground();
+	this->DrawEntities();
 	this->DrawPlayer();
 	this->showTimer();
-	this->DrawEntities();
 	wrefresh(this->main);
 }
 
@@ -239,11 +239,22 @@ void		GameManager::DrawProjectiles(void)
 	}
 }
 
+#include <sstream>
 void		GameManager::checkObjs(void)
 {
 	t_list	*tmp;
 
 	tmp = this->objects;
+	while (tmp != NULL)
+	{
+		Entity *obj = (Entity *)tmp->content;
+		if (this->player.getPos().x == obj->getPos().x 
+			&& this->player.getPos().y == obj->getPos().y)
+		{
+			this->GameOver = true;
+		}
+		tmp = tmp->next;
+	}
 }
 
 void		GameManager::createEnemies(void)
@@ -259,10 +270,11 @@ void		GameManager::createEnemies(void)
 void		GameManager::Update(void){
 	this->currStars = 0;
 	this->maxStars = 40;
-	while(this->secondsLeft >= 0) 
+	while(this->secondsLeft >= 0 && !this->GameOver) 
 	{
 		this->player.getPlayerInput(this->main);
 		wattroff(this->main, COLOR_PAIR(5));
+		this->checkObjs();
 		this->Draw();
 		this->tick++;
 		this->swap++;
@@ -270,7 +282,7 @@ void		GameManager::Update(void){
 	}
 }
 
-void GameManager::showTimer(void) 
+void 		GameManager::showTimer(void) 
 {
 	wattron(this->main, COLOR_PAIR(2));
 	mvwprintw(this->main, 0, 0, "%i", this->secondsLeft / 60);

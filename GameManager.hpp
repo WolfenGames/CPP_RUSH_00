@@ -43,6 +43,7 @@ class GameManager
 		// Menu	menu;
 		void	showTimer(void);
 		bool	canStart(void);
+		bool	GameOver;
 		void	Update(void);
 		void	Draw(void);
 		void	Init(void);
