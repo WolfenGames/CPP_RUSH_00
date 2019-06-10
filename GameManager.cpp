@@ -172,6 +172,7 @@ void		GameManager::pushOnObjects(Entity *obj)
 		{
 			this->objects = new t_list;
 			this->objects->content = obj;
+			this->objects->previous = NULL;
 			this->objects->next = NULL;
 		}
 		else
@@ -180,6 +181,7 @@ void		GameManager::pushOnObjects(Entity *obj)
 				tmp = tmp->next;
 			tmp->next = new t_list;
 			tmp->next->content = obj;
+			tmp->next->previous =tmp;
 			tmp->next->next = NULL;
 		}
 	}
@@ -276,6 +278,27 @@ void		GameManager::DrawProjectiles(void)
 			pos.x++;
 		}
 		bullet->setPos(pos);
+		this->checkProjectile(bullet);
+		runner = runner->next;
+	}
+}
+
+void		GameManager::checkProjectile(Projectile *bullet){
+	t_list *runner = this->objects;
+	VEC Epos;
+	VEC Bpos;
+	while(runner){
+		Entity *En = (Entity *)runner->content;
+		Epos = En->getPos();
+		Bpos = bullet->getPos();
+
+		if (Epos.x == Bpos.x && Epos.y == Bpos.y)
+		{
+			Bpos.x = this->max_x;
+			Bpos.y = this->max_y;
+			bullet->setPos(Bpos);
+			En->setPos(Bpos);
+		}
 		runner = runner->next;
 	}
 }
@@ -300,7 +323,7 @@ void		GameManager::checkObjs(void)
 
 void		GameManager::createEnemies(void)
 {
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 40; i++)
 	{
 		Entity *newE = new Entity();
 		newE->setPos(rand() % this->max_x, rand() % this->max_y);

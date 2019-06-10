@@ -59,7 +59,7 @@ class GameManager
 		void	pushOnProjectiles(Projectile*);
 		bool	entityExists(Entity*, t_list*);
 		void	checkObjs(void);
-		void	checkProjectile(void);
+		void	checkProjectile(Projectile *);
 		void	DrawEnemies(void);
 		void	UpdateEnemies();
 };

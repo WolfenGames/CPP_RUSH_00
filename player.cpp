@@ -89,12 +89,15 @@ void Player::killBullet(VEC pos){
         Projectile *tmp = (Projectile *)runner->content;
         VEC current = tmp->getPos();
         if (pos.x == current.x && pos.y == current.y && pos.heading == current.heading){
-            runner->next->previous = runner->previous;
-            runner->previous->next = runner->next;
+            if (runner->next)
+                runner->next->previous = runner->previous;
+            if (runner->previous)
+                runner->previous->next = runner->next;
             delete (Projectile *)runner->content;
             delete runner;
+            break;
         }
-
+        runner = runner->next;
     }
 }
 
