@@ -24,6 +24,7 @@ class Player: public Entity
 	void getPlayerInput(WINDOW *);
         void shoot();
 	void addBullet(VEC);
+	t_list *getProjectiles();
 	void killBullet(VEC);
 
 	private:

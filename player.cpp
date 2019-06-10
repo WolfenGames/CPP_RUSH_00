@@ -64,7 +64,7 @@ void Player::shoot(){
 void Player::addBullet(VEC pos){
     t_list *runner;
     Projectile *bullet = new Projectile;
-    //bullet->setPos(pos);
+    bullet->setPos(pos);
     (void)pos;
 
     runner = this->bullets;
@@ -82,6 +82,7 @@ void Player::addBullet(VEC pos){
         runner->next->next = NULL;
     }
 }
+
 void Player::killBullet(VEC pos){
     t_list *runner = this->bullets;
     while (runner){
@@ -95,4 +96,8 @@ void Player::killBullet(VEC pos){
         }
 
     }
+}
+
+t_list *Player::getProjectiles(){
+    return (this->bullets);
 }

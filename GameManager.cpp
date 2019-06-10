@@ -151,6 +151,7 @@ void		GameManager::Draw(void)
 	this->DrawBackground();
 	this->DrawEntities();
 	this->DrawPlayer();
+	this->DrawProjectiles();
 	this->showTimer();
 	wrefresh(this->main);
 }
@@ -225,17 +226,28 @@ void		GameManager::DrawEntities(void)
 
 void		GameManager::DrawProjectiles(void)
 {
-	t_list *tmp;
+	t_list *runner;
+	VEC pos;
 
-	tmp = this->projectiles;
-	while (tmp)
-	{
-		Projectile *x = (Projectile*)tmp->content;
-		wattron(this->main, COLOR_PAIR(4));
-		//Position based on heading
-		mvwprintw(this->main, x->getPos().y, x->getPos().x, "#");
-		wattroff(this->main, COLOR_PAIR(4));
-		tmp = tmp->next;
+	runner = this->player.getProjectiles();
+	while (runner){
+		Projectile *bullet = (Projectile *)runner->content;
+		pos = bullet->getPos();
+		if (pos.heading == 0){
+			mvwprintw(this->main, pos.y, pos.x, "|");
+			pos.y++;
+		} else if (pos.heading == 1){
+			mvwprintw(this->main, pos.y, pos.x, "|");
+			pos.y--;
+		} else if (pos.heading == 2){
+			mvwprintw(this->main, pos.y, pos.x, "-");
+			pos.x--;
+		} else if (pos.heading == 3){
+			mvwprintw(this->main, pos.y, pos.x, "-");
+			pos.x++;
+		}
+		bullet->setPos(pos);
+		runner = runner->next;
 	}
 }
 
