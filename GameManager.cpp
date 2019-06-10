@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   GameManager.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tramants <tramants@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:55 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 17:08:35 by rde-beer         ###   ########.fr       */
+/*   Updated: 2019/06/10 17:30:07 by tramants         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,21 @@ void		GameManager::DrawEntities(void)
 	{
 		Entity *x = (Entity*)tmp->content;
 		wattron(this->main, COLOR_PAIR(4));
-		mvwprintw(this->main, x->getPos().y, x->getPos().x, "#");
+		if (x->isBig)
+		{
+			mvwprintw(this->main, x->getPos().y, x->getPos().x, "#");
+			mvwprintw(this->main, x->getPos().y, x->getPos().x - 1, "=");
+			mvwprintw(this->main, x->getPos().y, x->getPos().x - 2, "-");
+		}
+		else
+		{
+
+			mvwprintw(this->main, x->getPos().y - 1, x->getPos().x, "#");
+			mvwprintw(this->main, x->getPos().y, x->getPos().x, "#");
+			mvwprintw(this->main, x->getPos().y + 1, x->getPos().x, "#");
+			mvwprintw(this->main, x->getPos().y, x->getPos().x - 1, "=");
+			mvwprintw(this->main, x->getPos().y, x->getPos().x - 2, "-");
+		}
 		wattroff(this->main, COLOR_PAIR(4));
 		tmp = tmp->next;
 	}
@@ -330,7 +344,7 @@ void		GameManager::createEnemies(void)
 {
 	for (int i = 0; i < 40; i++)
 	{
-		Entity *newE = new Entity();
+		Entity *newE = new Entity((rand() % 2) == 0 ? true : false);
 		newE->setPos(rand() % this->max_x, rand() % this->max_y);
 		this->pushOnObjects(newE);
 	}
