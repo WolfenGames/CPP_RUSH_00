@@ -44,6 +44,7 @@ void    Enemy::updateMovement(int max_y, int max_x)
     }
 	if (enemyPos.x + 2 == max_x)
 	{
+<<<<<<< HEAD
 		int randX = 2;
         int randY = rand() % max_y;
 
@@ -54,6 +55,15 @@ void    Enemy::updateMovement(int max_y, int max_x)
             randY = 1;
         } 
         enemyPos.x = randX;
+=======
+		int randX = rand() % 30;
+        int randY = rand() % 30;
+
+		if (randY <= 1) randY += 3;
+		if (randY >= max_x - 1) randY -= 3;
+		(void)max_y;
+        enemyPos.x = randX - 15;
+>>>>>>> master
         enemyPos.y = randY;
     }
     this->setPos(enemyPos);

@@ -61,5 +61,10 @@ void	Entity::renderDown(WINDOW *main, const char *sprite)
 
 void	Entity::setLife(int l)
 {
-	this->life = l;
+	this->life += l;
+}
+
+bool	Entity::getLife(void)
+{
+	return (this->life > 0);
 }

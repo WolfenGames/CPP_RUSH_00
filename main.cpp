@@ -6,7 +6,7 @@
 /*   By: tramants <tramants@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 08:57:10 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/10 14:15:43 by tramants         ###   ########.fr       */
+/*   Updated: 2019/06/10 14:27:02 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		main(void)
 		manager.createEnemies();
 		manager.Update();
 	}
-
+	manager.gameOver();
 	endwin();
 	return (0);
 }
