@@ -21,14 +21,15 @@
 
 class Projectile: public Entity
 {
-	private:
-		int				lifespan;
-
 	public:
 		Projectile(void);
 		Projectile(const Projectile&);
 		Projectile &operator=(const Projectile&);
 		~Projectile();
+	
+	private:
+		int		lifespan;
+		std::string sprite;
 };
 
 

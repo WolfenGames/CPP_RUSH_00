@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   GameManager.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tramants <tramants@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 09:01:59 by jwolf             #+#    #+#             */
 /*   Updated: 2019/06/10 15:10:35 by rde-beer         ###   ########.fr       */
@@ -19,6 +19,7 @@
 #include "player.hpp"
 #include "Common.hpp"
 #include "Projectile.hpp"
+#include "enemy.hpp"
 
 class GameManager
 {
@@ -26,6 +27,7 @@ class GameManager
 		WINDOW	*main;
 		WINDOW	*score;
 		Player	player;
+		Enemy	enemy;
 		t_list	*objects;
 		t_list	*projectiles;
 		int 	max_y;
@@ -60,6 +62,8 @@ class GameManager
 		bool	entityExists(Entity*, t_list*);
 		void	checkObjs(void);
 		void	checkProjectile(void);
+		void	DrawEnemies(void);
+		void	UpdateEnemies();
 };
 
 #endif

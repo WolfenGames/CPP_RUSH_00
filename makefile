@@ -1,6 +1,6 @@
 NAME = "ft_retro"
 
-CFLAGS = -Wextra -Wall -Werror -O3 -std=c++11
+CFLAGS = -Wextra -Wall -Werror -O3 -std=c++98
 LDFLAGS = -lncurses 
 
 C = clang++
@@ -9,8 +9,8 @@ DIR_S = ./
 DIR_H = ./
 DIR_O = obj
 
-SOURCES = main.cpp GameManager.cpp player.cpp Entity.cpp Projectile.cpp 
-HEADERS = GameManager.hpp player.hpp Entity.hpp Projectile.hpp Common.hpp
+SOURCES = main.cpp GameManager.cpp player.cpp Entity.cpp Projectile.cpp enemy.cpp 
+HEADERS = GameManager.hpp player.hpp Entity.hpp Projectile.hpp Common.hpp enemy.hpp
 
 HDRS  = $(addprefix $(DIR_H)/,$(HEADERS))
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))

@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Common.hpp                                         :+:      :+:    :+:   */
+/*   enemy.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwolf <jwolf@student.wethinkcode.co.za>    +#+  +:+       +#+        */
+/*   By: tramants <tramants@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/09 11:29:37 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/09 11:30:40 by jwolf            ###   ########.fr       */
+/*   Created: 2019/06/08 13:37:29 by jwolf             #+#    #+#             */
+/*   Updated: 2019/06/10 14:22:21 by tramants         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMON_HPP
-# define COMMON_HPP
+#ifndef ENEMY_HPP
+# define ENEMY_HPP
 
-typedef struct	s_list
-{
-	void		*content;
-	s_list		*next;
-	s_list		*previous;
-}				t_list;
+#include "Entity.hpp"
 
-struct VEC
+class Enemy: public Entity
 {
-	int x;
-	int y;
-	int heading;
+	public:
+		Enemy();
+		~Enemy();
+		void	renderEnemy(WINDOW *main, const char *sprite);
+		void	updateMovement(int max_x, int max_y);
+	private:
 };
 
 #endif

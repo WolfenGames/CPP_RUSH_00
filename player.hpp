@@ -14,16 +14,21 @@
 # define PLAYER_HPP
 
 #include "Entity.hpp"
+#include "Projectile.hpp"
 
 class Player: public Entity
 {
 	public:
-		Player();
-		~Player();
-		void getPlayerInput(WINDOW *);
+	Player();
+	~Player();
+	void getPlayerInput(WINDOW *);
         void shoot();
+	void addBullet(VEC);
+	void killBullet(VEC);
+
 	private:
-        Entity **bullets;
+	t_list *bullets;
+
 };
 
 #endif
