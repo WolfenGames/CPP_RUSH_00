@@ -29,7 +29,8 @@ class Entity {
 		void	setPos(int, int);
 		VEC		getPos(void);
 		void	setLife(int);
-		bool	getLife(void);
+		int		getLife(void);
+		bool	IsAlive(void);
 	private:
 		VEC		pos;
 		int		life;

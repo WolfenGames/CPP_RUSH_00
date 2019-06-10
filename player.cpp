@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwolf <jwolf@student.wethinkcode.co.za>    +#+  +:+       +#+        */
+/*   By: rde-beer <rde-beer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 13:37:37 by jwolf             #+#    #+#             */
-/*   Updated: 2019/06/09 15:57:45 by jwolf            ###   ########.fr       */
+/*   Updated: 2019/06/10 16:57:35 by rde-beer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,9 @@ void Player::killBullet(VEC pos){
 
 t_list *Player::getProjectiles(){
     return (this->bullets);
+}
+
+int     Player::getLifes(void)
+{
+    return this->getLife();
 }
